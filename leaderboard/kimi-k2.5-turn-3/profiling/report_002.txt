@@ -1,0 +1,9 @@
+Profiling Report #002
+Date: 2026-02-16 16:14:42 UTC
+
+Top Functions:
+   80.62%  vector_db_skeleton::distance::l2_distance_avx512
+    6.29%  core::slice::sort::select::partition_at_index
+    4.13%  rayon::iter::plumbing::Folder::consume_iter
+    1.48%  serde_json::de::Deserializer<R>::parse_decimal
+    1.02%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize

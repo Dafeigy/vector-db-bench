@@ -1,0 +1,14 @@
+Profiling Report #003
+Date: 2026-02-16 16:34:09 UTC
+
+Top Functions:
+   24.95%  _ZN18vector_db_skeleton8distance23l2_distance_avx512_impl17h00657b01e9b72c88E.llvm.10937145820424567952
+    4.67%  clear_page_erms
+    3.17%  mem_cgroup_commit_charge
+    3.11%  try_charge_memcg
+    2.94%  __rcu_read_unlock
+    2.54%  __mem_cgroup_charge
+    2.49%  native_irq_return_iret
+    2.08%  0x0000000000198dc3
+    2.06%  zap_pte_range
+    2.04%  0x0000000000199013

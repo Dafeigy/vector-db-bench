@@ -1,0 +1,19 @@
+{
+  "qps": 43.16998759416313,
+  "total_queries": 10000,
+  "duration_secs": 231.642410788,
+  "avg_latency_ms": 92.55232673659984,
+  "p50_latency_ms": 87.663622,
+  "p95_latency_ms": 141.82544739999992,
+  "p99_latency_ms": 195.35038752000017,
+  "recall": 0.9993699999999988,
+  "recall_threshold": 0.95,
+  "recall_passed": true,
+  "concurrency": 4,
+  "comparison": {
+    "previous_qps": 44.46058217549102,
+    "qps_change_pct": -2.9,
+    "previous_recall": 0.9994,
+    "recall_change_pct": -0.0
+  }
+}

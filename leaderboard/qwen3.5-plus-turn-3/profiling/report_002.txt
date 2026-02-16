@@ -1,0 +1,6 @@
+Profiling Report #002
+Date: 2026-02-16 16:52:14 UTC
+
+Top Functions:
+   82.14%  _ZN18vector_db_skeleton2db26l2_distance_squared_avx51217haa1e2d0642f54e9cE.llvm.11134203316982019120
+   14.52%  vector_db_skeleton::db::VectorDB::search

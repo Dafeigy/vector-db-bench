@@ -1,0 +1,12 @@
+Profiling Report #002
+Date: 2026-02-16 15:29:27 UTC
+
+Top Functions:
+   30.59%  core::core_arch::x86::avx512f::_mm512_fmadd_ps
+   23.39%  core::core_arch::x86::avx512f::_mm512_loadu_ps
+   19.51%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+   11.56%  core::core_arch::x86::avx512f::_mm512_add_ps
+    3.59%  core::core_arch::x86::avx512f::_mm512_reduce_add_ps
+    3.29%  alloc::collections::binary_heap::BinaryHeap<T,A>::pop
+    3.25%  core::core_arch::x86::avx512f::_mm512_sub_ps
+    1.62%  core::core_arch::x86::avx512f::_mm512_setzero_ps

@@ -1,0 +1,6 @@
+Profiling Report #003
+Date: 2026-02-16 14:48:14 UTC
+
+Top Functions:
+   89.60%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    4.02%  core::slice::sort::unstable::quicksort::partition

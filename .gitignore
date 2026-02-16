@@ -1,0 +1,37 @@
+# Rust build artifacts
+**/target/
+
+# Data files (large, downloadable/regeneratable)
+data/*.fvecs
+data/*.ivecs
+data/base_vectors_*.json
+data/query_vectors.json
+data/ground_truth.json
+
+# Merged vectors generated during agent runs
+**/base_vectors_merged.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# --- Keep these (reports, logs, source code) ---
+# agent_log.jsonl        ✓ kept
+# eval_log.json          ✓ kept
+# final_report.json      ✓ kept
+# final-report.md        ✓ kept
+# benchmarks/*.json      ✓ kept
+# profiling/*.txt         ✓ kept
+# profiling/*.svg         ✓ kept
+# flamegraph.svg          ✓ kept
+# src/**                  ✓ kept
+# Cargo.toml / Cargo.lock ✓ kept

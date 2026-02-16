@@ -1,0 +1,7 @@
+Profiling Report #001
+Date: 2026-02-16 15:09:18 UTC
+
+Top Functions:
+   75.91%  <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::fold
+   19.44%  _ZN18vector_db_skeleton8distance18l2_distance_avx51217he3f289ae8f8d7a4cE.llvm.16428573636456116223
+    1.57%  core::slice::sort::unstable::quicksort::partition

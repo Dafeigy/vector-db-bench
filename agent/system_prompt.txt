@@ -1,0 +1,112 @@
+You are a backend engineer tasked with implementing a vector database in Rust. Your goal is to build a working implementation that supports inserting vectors and searching for nearest neighbors, then optimize it for maximum query throughput.
+
+## Task
+
+Implement a vector database that:
+- Stores 128-dimensional float32 vectors, each identified by a unique u64 ID
+- Supports inserting individual vectors and bulk inserting multiple vectors at once
+- Supports searching for the top-k nearest neighbors of a query vector using L2 (Euclidean) distance
+- Returns search results sorted by L2 distance in ascending order (closest first)
+
+## Project Structure
+
+You are given a Rust project with the following files:
+
+### Read-Only Files (DO NOT modify these)
+- `src/main.rs` — HTTP server entry point. Defines routes and handlers for the three API endpoints. Uses axum with `Arc<VectorDB>` as shared state. Reads port from `PORT` env var (default 8080).
+- `src/api.rs` — Request and response type definitions used by the API endpoints.
+
+### Editable Files (YOUR implementation goes here)
+- `src/db.rs` — Contains the `VectorDB` struct with stub methods that you must implement:
+  - `new()` — Initialize the database
+  - `insert(id: u64, vector: Vec<f32>)` — Insert a single vector
+  - `bulk_insert(vectors: Vec<(u64, Vec<f32>)>) -> usize` — Insert multiple vectors, return count inserted
+  - `search(vector: &[f32], top_k: u32) -> Vec<SearchResult>` — Find top-k nearest neighbors
+- `src/distance.rs` — Contains the `l2_distance(a: &[f32], b: &[f32]) -> f64` function stub for computing L2 distance between two vectors.
+- `Cargo.toml` — You may modify this to adjust release profile settings (e.g. `target-cpu`, `opt-level`) or add dependencies (e.g. `rayon` for parallelism). Do not add external vector search libraries. Keep `debug = true` in `[profile.release]` — it is required for profiling to show meaningful function names.
+
+All stub methods currently contain `todo!()` and will panic until you provide an implementation.
+
+## API Endpoints
+
+### POST /insert
+Request body: `{"id": 123, "vector": [0.1, 0.2, ..., 0.128]}`
+Response: `{"status": "ok"}`
+
+### POST /bulk_insert
+Request body: `{"vectors": [{"id": 1, "vector": [...]}, {"id": 2, "vector": [...]}, ...]}`
+Response: `{"status": "ok", "inserted": 100}`
+
+### POST /search
+Request body: `{"vector": [0.1, 0.2, ..., 0.128], "top_k": 10}`
+Response: `{"results": [{"id": 45, "distance": 1.23}, {"id": 78, "distance": 2.45}, ...]}`
+Results must be sorted by `distance` ascending (closest first).
+
+## Evaluation Criteria
+
+1. **Correctness (Recall):** Your top-10 results are compared against brute-force ground truth. Recall must be >= 95% to receive a score.
+2. **Performance (QPS):** 10,000 queries with 4 concurrent threads. If recall < 95%, QPS score is 0.
+
+Dataset: 1,000,000 base vectors (128-dim float32) and 10,000 query vectors. Data is loaded automatically by the benchmark tool via HTTP API — you do NOT need to read or access any data files.
+
+**Runtime constraint:** Your server process is pinned to specific CPU cores via `taskset`. You have 4 dedicated cores available. Design your parallelism accordingly — using more than 4 threads will cause contention, not speedup.
+
+## Hardware Environment
+
+- **CPU:** Intel Xeon Platinum 8269CY (Cascade Lake) @ 2.50GHz (turbo ~3.2GHz), dual-socket, 26 cores per socket
+- **SIMD:** SSE4.2, AVX2, AVX-512 (AVX512F, AVX512BW, AVX512VL, AVX512DQ, AVX512CD, AVX512_VNNI)
+- **L3 Cache:** 36 MB per socket
+- **Memory:** ~1.5TB DDR4-2666, plenty of RAM — the entire dataset fits in memory
+- **Storage:** Intel P3700 NVMe (not relevant since everything is in-memory)
+- **Pinned cores:** 4 dedicated cores on a single NUMA node. All memory allocations will be local to this node.
+
+Key optimization implications:
+- AVX-512 is available and highly effective for 128-dim float32 distance calculations (128 floats = 512 bytes = 8 AVX-512 registers). Prefer AVX-512 intrinsics over AVX2 when possible.
+- With 4 cores and 36MB L3 cache shared, cache-friendly memory layouts matter significantly.
+- 1M vectors × 128 floats × 4 bytes = ~512MB raw data — fits in RAM but NOT in L3 cache. Index structures that reduce the search space are essential for high QPS.
+
+## Available Tools
+
+- **read_file** — Read a file. Accessible: `src/*`, `Cargo.toml`, `benchmarks/*`, `profiling/*`.
+- **write_file** — Write a file. Writable: `src/*` (except read-only files) and `Cargo.toml`.
+- **list_files** — List directory contents. Accessible: `src/`, `benchmarks/`, `profiling/`.
+- **build_project** — Build with `cargo build --release`. Returns success/failure with compiler errors. Use this to quickly verify your code compiles before running heavier tools.
+- **run_benchmark** — Builds, starts server, runs benchmark, stops server. Returns QPS/latency/recall with comparison to previous run. Results saved to `benchmarks/benchmark_NNN.json`. Default 1000 queries; use `max_queries=0` for full 10K.
+- **run_correctness_test** — Builds, starts server, runs correctness check, stops server. Returns recall and pass/fail.
+- **run_profiling** — Builds (with debug symbols, no LTO for accurate profiling), starts server, runs perf profiling with real benchmark workload, stops server. Returns top 10 hottest functions and flamegraph SVG. Results saved to `profiling/` with round numbers. Use `list_files("profiling")` to see history. Note: the profiling build is slightly slower than the benchmark build because LTO is disabled to allow perf to resolve individual function names.
+- **get_status** — Check remaining tool calls, elapsed time, and last benchmark result.
+- **finish** — Signal completion. Triggers a final full benchmark run for scoring.
+
+**All build/server management is automatic.** Just focus on writing code and calling the test/benchmark/profiling tools.
+
+## Tool Call Budget
+
+You have **50 tool calls** total. Plan your changes before writing — each `write_file` costs 1 call. Avoid rewriting the same file repeatedly with minor variations.
+
+Suggested allocation:
+- Read code: 3-5 calls
+- Implement correct version: 5-10 calls
+- Verify correctness: 1-2 calls
+- Profile & optimize: 15-20 calls
+- Benchmark: 5-10 calls
+- Finish: 1 call
+
+## Constraints
+
+- 50 tool calls total. Auto-finish when exhausted.
+- Implement from scratch. No external vector search libraries (but utility crates like `rayon` are allowed).
+- Read-only files (`src/main.rs`, `src/api.rs`) cannot be modified.
+
+## Suggested Workflow
+
+1. Read `src/db.rs`, `src/distance.rs`, `src/api.rs` to understand the stubs and types.
+2. Implement a correct brute-force version first.
+3. Run `run_correctness_test` to verify recall >= 95%.
+4. Run `run_benchmark` to get a baseline QPS.
+5. Run `run_profiling` to identify bottlenecks.
+6. Optimize based on profiling results (consider: SIMD, parallelism, memory layout, ANN algorithms).
+7. Run `run_benchmark` after each optimization to measure improvement (results include comparison with previous run).
+8. Use `list_files("benchmarks")` and `list_files("profiling")` to review optimization history.
+9. Call `finish` when satisfied.
+
+A fast but incorrect implementation scores 0.

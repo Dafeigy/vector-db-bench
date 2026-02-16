@@ -1,0 +1,92 @@
+[
+  {
+    "model_name": "qwen3.5-plus",
+    "entry_dir": "qwen3.5-plus-turn-3",
+    "qps": 1405.2997680039518,
+    "recall": 0.9558399999999688,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.722143+00:00"
+  },
+  {
+    "model_name": "kimi-k2.5",
+    "entry_dir": "kimi-k2.5-turn-2",
+    "qps": 290.125939540702,
+    "recall": 0.964279999999973,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.711643+00:00"
+  },
+  {
+    "model_name": "kimi-k2.5",
+    "entry_dir": "kimi-k2.5-turn-3",
+    "qps": 58.68959433388579,
+    "recall": 0.9990999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.714143+00:00"
+  },
+  {
+    "model_name": "glm-5",
+    "entry_dir": "glm-5-turn-3",
+    "qps": 54.69346000145711,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.708143+00:00"
+  },
+  {
+    "model_name": "glm-5",
+    "entry_dir": "glm-5-turn-2",
+    "qps": 54.45365813880963,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.705643+00:00"
+  },
+  {
+    "model_name": "qwen3.5-plus",
+    "entry_dir": "qwen3.5-plus-turn-2",
+    "qps": 54.079749099712366,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-16T18:18:54.719143+00:00"
+  },
+  {
+    "model_name": "qwen3.5-plus",
+    "entry_dir": "qwen3.5-plus-turn-1",
+    "qps": 36.80876794116389,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "benchmark_files_scan",
+    "timestamp": "2026-02-16T18:18:54.716143+00:00"
+  },
+  {
+    "model_name": "kimi-k2.5",
+    "entry_dir": "kimi-k2.5-turn-1",
+    "qps": 18.794268388717764,
+    "recall": 0.9990999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 0,
+    "result_source": "benchmark_files_scan",
+    "timestamp": "2026-02-16T18:18:54.709144+00:00"
+  },
+  {
+    "model_name": "glm-5",
+    "entry_dir": "glm-5-turn-1",
+    "qps": 14.41736018150013,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "benchmark_files_scan",
+    "timestamp": "2026-02-16T18:18:54.703143+00:00"
+  }
+]

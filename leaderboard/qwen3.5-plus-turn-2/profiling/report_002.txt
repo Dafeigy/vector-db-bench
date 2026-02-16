@@ -1,0 +1,10 @@
+Profiling Report #002
+Date: 2026-02-16 16:00:39 UTC
+
+Top Functions:
+   79.05%  _ZN18vector_db_skeleton2db31l2_distance_squared_avx512_impl17h73d735b66cf55eeeE.llvm.14455524626523749970
+    6.32%  core::slice::sort::unstable::quicksort::partition
+    4.42%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    1.55%  rayon::iter::plumbing::bridge_producer_consumer::helper
+    1.33%  serde_json::de::Deserializer<R>::parse_decimal
+    1.04%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize

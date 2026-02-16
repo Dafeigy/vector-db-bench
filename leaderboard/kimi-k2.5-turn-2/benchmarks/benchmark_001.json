@@ -1,0 +1,13 @@
+{
+  "qps": 44.99889006255259,
+  "total_queries": 1000,
+  "duration_secs": 22.222770353,
+  "avg_latency_ms": 88.73131921800005,
+  "p50_latency_ms": 92.5433195,
+  "p95_latency_ms": 147.72189375,
+  "p99_latency_ms": 169.95863913999997,
+  "recall": 0.9993999999999998,
+  "recall_threshold": 0.95,
+  "recall_passed": true,
+  "concurrency": 4
+}

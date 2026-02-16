@@ -1,0 +1,7 @@
+Profiling Report #004
+Date: 2026-02-16 15:33:36 UTC
+
+Top Functions:
+   74.36%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+   20.31%  _ZN18vector_db_skeleton8distance18l2_distance_avx51217h7a454ddfd603956dE.llvm.80274682638255018
+    1.91%  core::slice::sort::unstable::quicksort::partition

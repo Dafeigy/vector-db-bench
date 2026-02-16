@@ -1,0 +1,13 @@
+Profiling Report #001
+Date: 2026-02-16 16:00:43 UTC
+
+Top Functions:
+   62.16%  <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::fold
+    6.82%  hashbrown::map::HashMap<K,V,S,A>::insert
+    6.40%  core::slice::sort::stable::quicksort::quicksort
+    5.76%  vector_db_skeleton::db::VectorDB::search
+    4.49%  core::hash::BuildHasher::hash_one
+    2.51%  _ZN71_$LT$core..hash..sip..Hasher$LT$S$GT$$u20$as$u20$core..hash..Hasher$GT$5write17h7b20c10f0ca70858E.llvm.3757137073769279150
+    2.32%  _ZN9hashbrown3raw21RawTable$LT$T$C$A$GT$14reserve_rehash17h280270b982fa9124E.llvm.10212412883912634320
+    2.04%  core::slice::sort::shared::smallsort::small_sort_general_with_scratch
+    1.09%  0x0000000000198c89

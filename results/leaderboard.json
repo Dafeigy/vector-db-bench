@@ -1,13 +1,23 @@
 [
   {
     "model_name": "qwen3.5-plus",
-    "entry_dir": "qwen3.5-plus-turn-3",
+    "entry_dir": "qwen3.5-plus-turn-12",
     "qps": 1405.2997680039518,
     "recall": 0.9558399999999688,
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.722143+00:00"
+    "timestamp": "2026-02-19T18:54:19.232404+00:00"
+  },
+  {
+    "model_name": "google/gemini-3.1-pro-preview",
+    "entry_dir": "gemini-3.1-pro-preview-turn-1",
+    "qps": 657.9949654923324,
+    "recall": 0.9727999999999976,
+    "recall_passed": true,
+    "tool_calls_used": 46,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-19T18:54:19.214633+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -17,7 +27,27 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.711643+00:00"
+    "timestamp": "2026-02-19T18:54:19.225213+00:00"
+  },
+  {
+    "model_name": "google/gemini-3.1-pro-preview",
+    "entry_dir": "gemini-3.1-pro-preview-turn-2",
+    "qps": 73.27630173846225,
+    "recall": 0.9994999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 31,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-19T18:54:19.215798+00:00"
+  },
+  {
+    "model_name": "google/gemini-3.1-pro-preview",
+    "entry_dir": "gemini-3.1-pro-preview-turn-3",
+    "qps": 69.32320898368339,
+    "recall": 0.999,
+    "recall_passed": true,
+    "tool_calls_used": 46,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-19T18:54:19.217670+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -27,7 +57,7 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.714143+00:00"
+    "timestamp": "2026-02-19T18:54:19.226970+00:00"
   },
   {
     "model_name": "glm-5",
@@ -37,7 +67,7 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.708143+00:00"
+    "timestamp": "2026-02-19T18:54:19.222717+00:00"
   },
   {
     "model_name": "glm-5",
@@ -47,27 +77,27 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.705643+00:00"
+    "timestamp": "2026-02-19T18:54:19.221074+00:00"
   },
   {
     "model_name": "qwen3.5-plus",
-    "entry_dir": "qwen3.5-plus-turn-2",
+    "entry_dir": "qwen3.5-plus-turn-11",
     "qps": 54.079749099712366,
     "recall": 0.9994,
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-16T18:18:54.719143+00:00"
+    "timestamp": "2026-02-19T18:54:19.230440+00:00"
   },
   {
     "model_name": "qwen3.5-plus",
-    "entry_dir": "qwen3.5-plus-turn-1",
+    "entry_dir": "qwen3.5-plus-turn-10",
     "qps": 36.80876794116389,
     "recall": 0.9994,
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-16T18:18:54.716143+00:00"
+    "timestamp": "2026-02-19T18:54:19.228472+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -77,7 +107,7 @@
     "recall_passed": true,
     "tool_calls_used": 0,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-16T18:18:54.709144+00:00"
+    "timestamp": "2026-02-19T18:54:19.223031+00:00"
   },
   {
     "model_name": "glm-5",
@@ -87,6 +117,6 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-16T18:18:54.703143+00:00"
+    "timestamp": "2026-02-19T18:54:19.219360+00:00"
   }
 ]

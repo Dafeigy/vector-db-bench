@@ -15,6 +15,7 @@ data/ground_truth.json
 __pycache__/
 *.pyc
 *.pyo
+venv/
 
 # OS
 .DS_Store

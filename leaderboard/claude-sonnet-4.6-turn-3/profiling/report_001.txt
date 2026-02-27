@@ -1,0 +1,6 @@
+Profiling Report #001
+Date: 2026-02-23 17:53:35 UTC
+
+Top Functions:
+   91.61%  rayon::iter::plumbing::Folder::consume_iter
+    6.07%  vector_db_skeleton::db::VectorDB::search

@@ -1,0 +1,8 @@
+Profiling Report #003
+Date: 2026-02-26 03:15:02 UTC
+
+Top Functions:
+   86.84%  rayon::iter::plumbing::Folder::consume_iter
+    5.79%  core::slice::sort::stable::quicksort::quicksort
+    1.81%  core::slice::sort::shared::smallsort::small_sort_general_with_scratch
+    1.14%  0x0000000000198c89

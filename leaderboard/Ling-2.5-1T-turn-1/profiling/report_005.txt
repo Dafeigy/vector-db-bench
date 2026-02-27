@@ -1,0 +1,5 @@
+Profiling Report #005
+Date: 2026-02-26 03:32:44 UTC
+
+Top Functions:
+   95.34%  rayon::iter::plumbing::Folder::consume_iter

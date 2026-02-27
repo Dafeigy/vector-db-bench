@@ -1,0 +1,6 @@
+Profiling Report #002
+Date: 2026-02-26 03:00:04 UTC
+
+Top Functions:
+   91.41%  vector_db_skeleton::distance::l2_distance
+    3.22%  core::slice::sort::select::partition_at_index

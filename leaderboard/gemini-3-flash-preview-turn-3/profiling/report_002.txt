@@ -1,0 +1,11 @@
+Profiling Report #002
+Date: 2026-02-22 11:53:30 UTC
+
+Top Functions:
+   31.17%  _ZN4core9core_arch3x867avx512f15_mm512_fmadd_ps17h5e3b6174a630354fE.llvm.4381587667833917642
+   20.56%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+   17.83%  _ZN4core9core_arch3x867avx512f15_mm512_loadu_ps17h7cd5abaff7fed202E.llvm.4381587667833917642
+   15.75%  rayon::slice::sort::recurse
+    4.85%  rayon::slice::sort::insertion_sort_shift_left
+    3.39%  _ZN4core9core_arch3x867avx512f20_mm512_reduce_add_ps17h712de629f2806866E.llvm.4381587667833917642
+    2.15%  _ZN4core9core_arch3x867avx512f13_mm512_sub_ps17h3c4fbadd56ab5f57E.llvm.4381587667833917642

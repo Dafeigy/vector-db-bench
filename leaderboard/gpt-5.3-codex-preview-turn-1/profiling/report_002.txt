@@ -1,0 +1,14 @@
+Profiling Report #002
+Date: 2026-02-25 00:17:53 UTC
+
+Top Functions:
+   65.09%  vector_db_skeleton::db::l2_distance_sq_avx512_128
+    6.22%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize
+    3.35%  <&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32
+    3.02%  serde_json::de::Deserializer<R>::f64_from_parts
+    2.91%  vector_db_skeleton::db::VectorDB::search
+    2.66%  vector_db_skeleton::db::VectorDB::ivf_search
+    2.56%  serde_json::de::Deserializer<R>::parse_integer
+    2.47%  serde_json::de::Deserializer<R>::parse_decimal
+    2.09%  _ZN80_$LT$serde_json..de..SeqAccess$LT$R$GT$$u20$as$u20$serde_core..de..SeqAccess$GT$17next_element_seed16has_next_element17hed04f561df1a14aeE.llvm.12664701061061608714
+    1.61%  <serde_json::de::SeqAccess<R> as serde_core::de::SeqAccess>::next_element_seed

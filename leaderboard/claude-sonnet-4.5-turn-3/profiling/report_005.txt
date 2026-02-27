@@ -1,0 +1,12 @@
+Profiling Report #005
+Date: 2026-02-23 20:01:48 UTC
+
+Top Functions:
+   65.15%  _ZN18vector_db_skeleton8distance26l2_distance_squared_avx51217h18a870110f6e7221E.llvm.10742732370732168038
+   14.49%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    3.98%  vector_db_skeleton::db::VectorDB::search
+    2.45%  serde_json::de::Deserializer<R>::parse_decimal
+    2.19%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    1.82%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize
+    1.34%  _ZN10serde_json2de21Deserializer$LT$R$GT$13parse_integer17ha360806030c9e225E.llvm.2469454299875842270
+    1.27%  <&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32

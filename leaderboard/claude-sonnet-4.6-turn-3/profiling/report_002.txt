@@ -1,0 +1,6 @@
+Profiling Report #002
+Date: 2026-02-23 19:01:48 UTC
+
+Top Functions:
+   96.52%  _ZN4core3ops8function5impls71_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$F$GT$8call_mut17h8e79af720f0f1aa2E.llvm.16944813507171431624
+    2.51%  vector_db_skeleton::db::VectorDB::search

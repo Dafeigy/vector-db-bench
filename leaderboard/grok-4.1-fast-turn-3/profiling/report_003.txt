@@ -1,0 +1,7 @@
+Profiling Report #003
+Date: 2026-02-22 09:08:42 UTC
+
+Top Functions:
+   76.05%  _ZN18vector_db_skeleton8distance17avx512_l2_squared17h2ff9fd91dfdfc4bfE.llvm.14451302332528772106
+   16.52%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    1.17%  serde_json::de::Deserializer<R>::parse_decimal

@@ -1,0 +1,7 @@
+Profiling Report #003
+Date: 2026-02-22 15:25:48 UTC
+
+Top Functions:
+   88.01%  rayon::iter::plumbing::bridge_producer_consumer::helper
+    6.77%  core::slice::sort::unstable::quicksort::quicksort
+    1.95%  <alloc::vec::Vec<T> as alloc::vec::spec_from_iter::SpecFromIter<T,I>>::from_iter

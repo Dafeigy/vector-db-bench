@@ -1,0 +1,5 @@
+Profiling Report #002
+Date: 2026-02-22 09:04:50 UTC
+
+Top Functions:
+   96.06%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut

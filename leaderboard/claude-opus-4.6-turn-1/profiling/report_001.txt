@@ -1,0 +1,14 @@
+Profiling Report #001
+Date: 2026-02-23 15:44:30 UTC
+
+Top Functions:
+   50.29%  vector_db_skeleton::distance::l2_distance_batch_avx512
+    6.83%  serde_json::de::Deserializer<R>::parse_decimal
+    5.42%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize
+    4.52%  <&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32
+    3.76%  _ZN10serde_json2de21Deserializer$LT$R$GT$13parse_integer17h0cc217bcb4a53466E.llvm.8314843258289694715
+    3.74%  <serde_json::de::SeqAccess<R> as serde_core::de::SeqAccess>::next_element_seed
+    2.65%  _ZN80_$LT$serde_json..de..SeqAccess$LT$R$GT$$u20$as$u20$serde_core..de..SeqAccess$GT$17next_element_seed16has_next_element17h02bea57229d768bfE.llvm.8314843258289694715
+    2.21%  <serde_core::de::impls::<impl serde_core::de::Deserialize for alloc::vec::Vec<T>>::deserialize::VecVisitor<T> as serde_core::de::Visitor>::visit_seq
+    2.09%  vector_db_skeleton::db::VectorDB::find_nearest_centroid
+    1.86%  vector_db_skeleton::db::VectorDB::build_index

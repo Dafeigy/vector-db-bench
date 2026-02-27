@@ -1,0 +1,12 @@
+Profiling Report #003
+Date: 2026-02-22 15:24:38 UTC
+
+Top Functions:
+   32.07%  core::slice::sort::stable::quicksort::quicksort
+   31.17%  vector_db_skeleton::distance::l2_distance_avx2
+   11.08%  core::slice::sort::shared::smallsort::small_sort_general_with_scratch
+    6.70%  0x0000000000198c89
+    4.89%  core::slice::sort::stable::drift::sort
+    2.32%  std::sys::backtrace::__rust_begin_short_backtrace
+    2.30%  core::slice::sort::shared::smallsort::sort8_stable
+    1.09%  serde_json::de::Deserializer<R>::parse_decimal

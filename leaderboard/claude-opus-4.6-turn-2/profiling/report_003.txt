@@ -1,0 +1,7 @@
+Profiling Report #003
+Date: 2026-02-23 16:17:26 UTC
+
+Top Functions:
+   82.77%  _ZN18vector_db_skeleton8distance23l2_distance_avx512_impl17h1b28d6d5bba64b08E.llvm.8974944291897555891
+    8.27%  rayon::iter::plumbing::Folder::consume_iter
+    3.93%  rayon::iter::plumbing::Folder::consume_iter

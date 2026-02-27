@@ -1,0 +1,1268 @@
+{
+  "best_benchmark": {
+    "avg_latency_ms": 59.20462462100001,
+    "comparison": {
+      "previous_qps": 65.38769247761621,
+      "previous_recall": 0.9994,
+      "qps_change_pct": 3.12,
+      "recall_change_pct": -0.02
+    },
+    "concurrency": 4,
+    "duration_secs": 14.831073198,
+    "p50_latency_ms": 65.190517,
+    "p95_latency_ms": 90.54265475,
+    "p99_latency_ms": 103.78655000999998,
+    "qps": 67.42600394790392,
+    "recall": 0.9992,
+    "recall_passed": true,
+    "recall_threshold": 0.95,
+    "total_queries": 1000
+  },
+  "call_log": [
+    {
+      "duration_ms": 0,
+      "index": 1,
+      "input": {
+        "params": {
+          "path": "src/"
+        },
+        "tool": "list_files"
+      },
+      "output": {
+        "files": [
+          "api.rs",
+          "db.rs",
+          "distance.rs",
+          "main.rs"
+        ],
+        "type": "ListFiles"
+      },
+      "timestamp": "2026-02-22T11:31:07.690645846Z",
+      "tool": "list_files"
+    },
+    {
+      "duration_ms": 0,
+      "index": 2,
+      "input": {
+        "params": {
+          "path": "src/api.rs"
+        },
+        "tool": "read_file"
+      },
+      "output": {
+        "content": "use serde::{Deserialize, Serialize};\n\n#[derive(Deserialize)]\npub struct InsertRequest {\n    pub id: u64,\n    pub vector: Vec<f32>,\n}\n\n#[derive(Serialize)]\npub struct InsertResponse {\n    pub status: String,\n}\n\n#[derive(Deserialize)]\npub struct BulkInsertRequest {\n    pub vectors: Vec<InsertRequest>,\n}\n\n#[derive(Serialize)]\npub struct BulkInsertResponse {\n    pub status: String,\n    pub inserted: usize,\n}\n\n#[derive(Deserialize)]\npub struct SearchRequest {\n    pub vector: Vec<f32>,\n    pub top_k: u32,\n}\n\n#[derive(Serialize)]\npub struct SearchResult {\n    pub id: u64,\n    pub distance: f64,\n}\n\n#[derive(Serialize)]\npub struct SearchResponse {\n    pub results: Vec<SearchResult>,\n}\n",
+        "type": "ReadFile"
+      },
+      "timestamp": "2026-02-22T11:31:35.430613505Z",
+      "tool": "read_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 3,
+      "input": {
+        "params": {
+          "path": "src/db.rs"
+        },
+        "tool": "read_file"
+      },
+      "output": {
+        "content": "use crate::api::*;\n\npub struct VectorDB {\n    // 模型自行定义内部数据结构\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        todo!(\"模型实现\")\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        todo!(\"模型实现\")\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        todo!(\"模型实现\")\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        todo!(\"模型实现\")\n    }\n}\n",
+        "type": "ReadFile"
+      },
+      "timestamp": "2026-02-22T11:32:03.027440382Z",
+      "tool": "read_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 4,
+      "input": {
+        "params": {
+          "path": "src/distance.rs"
+        },
+        "tool": "read_file"
+      },
+      "output": {
+        "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    todo!(\"模型实现\")\n}\n",
+        "type": "ReadFile"
+      },
+      "timestamp": "2026-02-22T11:32:19.375809032Z",
+      "tool": "read_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 5,
+      "input": {
+        "params": {
+          "path": "Cargo.toml"
+        },
+        "tool": "read_file"
+      },
+      "output": {
+        "content": "[package]\nname = \"vector-db-skeleton\"\nversion = \"0.1.0\"\nedition = \"2021\"\n\n[dependencies]\naxum = \"0.7\"\ntokio = { version = \"1\", features = [\"full\"] }\nserde = { version = \"1\", features = [\"derive\"] }\nserde_json = \"1\"\n\n[profile.release]\nlto = true\ncodegen-units = 1\ndebug = true\n",
+        "type": "ReadFile"
+      },
+      "timestamp": "2026-02-22T11:32:48.502207883Z",
+      "tool": "read_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 6,
+      "input": {
+        "params": {
+          "content": "[package]\nname = \"vector-db-skeleton\"\nversion = \"0.1.0\"\nedition = \"2021\"\n\n[dependencies]\naxum = \"0.7\"\ntokio = { version = \"1\", features = [\"full\"] }\nserde = { version = \"1\", features = [\"derive\"] }\nserde_json = \"1\"\nparking_lot = \"0.12\"\nrayon = \"1.8\"\n\n[profile.release]\nlto = true\ncodegen-units = 1\ndebug = true\npanic = \"abort\"\nopt-level = 3\n",
+          "path": "Cargo.toml"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 341,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:33:20.029066530Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 7,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    (sum as f64).sqrt()\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 208,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:33:51.208422031Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 8,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::sync::Arc;\n\npub struct VectorDB {\n    data: RwLock<Vec<(u64, Vec<f32>)>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            data: RwLock::new(Vec::with_capacity(1_000_000)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut data = self.data.write();\n        data.push((id, vector));\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut data = self.data.write();\n        data.extend(vectors);\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let data = self.data.read();\n        \n        // Use a heap or simply sort for top-k. \n        // For brute force, we can use par_iter.\n        let mut results: Vec<SearchResult> = data\n            .par_iter()\n            .map(|(id, v)| SearchResult {\n                id: *id,\n                distance: l2_distance(v, vector),\n            })\n            .collect();\n\n        // Sort by distance ascending\n        results.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap());\n        \n        results.truncate(top_k as usize);\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1302,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:34:11.035206201Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 84551,
+      "index": 9,
+      "input": {
+        "tool": "run_correctness_test"
+      },
+      "output": {
+        "failed_queries": [],
+        "message": "Correctness test PASSED: recall 0.9990 >= threshold 0.9500",
+        "passed": true,
+        "recall": 0.999,
+        "recall_threshold": 0.95,
+        "total_queries": 100,
+        "type": "RunCorrectnessTest"
+      },
+      "timestamp": "2026-02-22T11:35:51.241338998Z",
+      "tool": "run_correctness_test"
+    },
+    {
+      "duration_ms": 115761,
+      "index": 10,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 249.28777152000023,
+        "concurrency": 4,
+        "duration_secs": 62.42644783,
+        "p50_latency_ms": 243.823689,
+        "p95_latency_ms": 320.83497800000004,
+        "p99_latency_ms": 367.73125137999995,
+        "qps": 16.018851540667583,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:38:30.382817336Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 11,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    (sum as f64).sqrt()\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    let mut sum = _mm512_setzero_ps();\n    for i in (0..128).step_by(16) {\n        let va = _mm512_loadu_ps(a.as_ptr().add(i));\n        let vb = _mm512_loadu_ps(b.as_ptr().add(i));\n        let diff = _mm512_sub_ps(va, vb);\n        sum = _mm512_fmadd_ps(diff, diff, sum);\n    }\n    let res = _mm512_reduce_add_ps(sum);\n    (res as f64).sqrt()\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 986,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:38:44.381889211Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 103124,
+      "index": 12,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 140.22539987400006,
+        "comparison": {
+          "previous_qps": 16.018851540667583,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": 77.64,
+          "recall_change_pct": 0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 35.141452566,
+        "p50_latency_ms": 135.9406465,
+        "p95_latency_ms": 191.6314453,
+        "p99_latency_ms": 218.19105187999995,
+        "qps": 28.456421888704693,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:40:41.652234184Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 13,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>, // Flattened for better cache locality\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<InsertRequest>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for req in vectors {\n            ids.push(req.id);\n            vs.extend(req.vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .map(|i| {\n                let start = i * 128;\n                let v = &vectors[start..start + 128];\n                SearchResult {\n                    id: ids[i],\n                    distance: l2_distance(v, vector),\n                }\n            })\n            .collect();\n\n        // Binary heap might be faster for top-k, but with 1M items, \n        // quickselect (select_nth_unstable) is very efficient.\n        let k = (top_k as usize).min(n);\n        if k < n {\n            results.select_nth_unstable_by(k - 1, |a, b| {\n                a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal)\n            });\n            results.truncate(k);\n        }\n        \n        results.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 2043,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:41:40.140713175Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 12973,
+      "index": 14,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "message": "Build failed: cargo build --release failed (exit code 101):\n   Compiling vector-db-skeleton v0.1.0 (/data/repo/kcores.com/repo/vector-db-bench/leaderboard/gemini-3-flash-preview-turn-2)\nerror[E0308]: mismatched types\n  --> src/main.rs:42:32\n   |\n42 |     let count = db.bulk_insert(vectors);\n   |                    ----------- ^^^^^^^ expected `Vec<InsertRequest>`, found `Vec<(u64, Vec<f32>)>`\n   |                    |\n   |                    arguments to this method are incorrect\n   |\n   = note: expected struct `Vec<api::InsertRequest>`\n              found struct `Vec<(u64, Vec<f32>)>`\nnote: method defined here\n  --> src/db.rs:27:12\n   |\n27 |     pub fn bulk_insert(&self, vectors: Vec<InsertRequest>) -> usize {\n   |            ^^^^^^^^^^^        ---------------------------\n\nFor more information about this error, try `rustc --explain E0308`.\nerror: could not compile `vector-db-skeleton` (bin \"vector-db-skeleton\") due to 1 previous error\n",
+        "type": "Error"
+      },
+      "timestamp": "2026-02-22T11:42:06.062794259Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 13,
+      "index": 15,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>, // Flattened for better cache locality\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .map(|i| {\n                let start = i * 128;\n                let v = &vectors[start..start + 128];\n                SearchResult {\n                    id: ids[i],\n                    distance: l2_distance(v, vector),\n                }\n            })\n            .collect();\n\n        let k = (top_k as usize).min(n);\n        if k < n {\n            results.select_nth_unstable_by(k - 1, |a, b| {\n                a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal)\n            });\n            results.truncate(k);\n        }\n        \n        results.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1912,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:42:38.700375682Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 81752,
+      "index": 16,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 74.75061731599995,
+        "comparison": {
+          "previous_qps": 28.456421888704693,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": 87.58,
+          "recall_change_pct": 0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 18.734079749,
+        "p50_latency_ms": 72.30131600000001,
+        "p95_latency_ms": 98.0805151,
+        "p99_latency_ms": 138.85336184,
+        "qps": 53.37865608548926,
+        "recall": 0.9994,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:45:47.848623Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 78483,
+      "index": 17,
+      "input": {
+        "params": {
+          "duration": null
+        },
+        "tool": "run_profiling"
+      },
+      "output": {
+        "flamegraph_svg_path": "profiling/flamegraph_001.svg",
+        "top_functions": [
+          {
+            "function": "_ZN18vector_db_skeleton8distance18l2_distance_avx51217h715a872cb67a42c7E.llvm.12293112897731866484",
+            "percentage": 77.04
+          },
+          {
+            "function": "core::slice::sort::select::partition_at_index",
+            "percentage": 6.2
+          },
+          {
+            "function": "core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut",
+            "percentage": 4.52
+          },
+          {
+            "function": "<serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize",
+            "percentage": 1.76
+          },
+          {
+            "function": "rayon::iter::plumbing::Folder::consume_iter",
+            "percentage": 1.54
+          },
+          {
+            "function": "<&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32",
+            "percentage": 1.02
+          }
+        ],
+        "total_samples": 9207,
+        "type": "RunProfiling"
+      },
+      "timestamp": "2026-02-22T11:47:09.095705339Z",
+      "tool": "run_profiling"
+    },
+    {
+      "duration_ms": 0,
+      "index": 18,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    (sum as f64).sqrt()\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    \n    // Unroll by 2 (32 floats = 128 bytes)\n    for i in (0..128).step_by(32) {\n        let va0 = _mm512_loadu_ps(a.as_ptr().add(i));\n        let vb0 = _mm512_loadu_ps(b.as_ptr().add(i));\n        let va1 = _mm512_loadu_ps(a.as_ptr().add(i + 16));\n        let vb1 = _mm512_loadu_ps(b.as_ptr().add(i + 16));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n    }\n    \n    let sum = _mm512_add_ps(sum0, sum1);\n    let res = _mm512_reduce_add_ps(sum);\n    (res as f64).sqrt()\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1423,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:47:15.557936726Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 75742,
+      "index": 19,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 61.02223558499986,
+        "comparison": {
+          "previous_qps": 53.37865608548926,
+          "previous_recall": 0.9994,
+          "qps_change_pct": 22.5,
+          "recall_change_pct": 0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 15.293397918,
+        "p50_latency_ms": 57.565681,
+        "p95_latency_ms": 103.18802529999998,
+        "p99_latency_ms": 158.66638218,
+        "qps": 65.38769247761621,
+        "recall": 0.9994,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:48:45.075586251Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 20,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n        \n        // Chunk to balance work and reduce collection overhead\n        let chunk_size = (n / 4 + 1).max(1024);\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k * 2),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist });\n                        if local_top.len() == k {\n                           local_top.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist < local_top[k-1].distance {\n                        // Binary search for insertion point or just replace last and sort?\n                        // For small k, simple replacement + sort is fine.\n                        // Or use a binary search to keep it sorted.\n                        let pos = match local_top.binary_search_by(|x| x.distance.partial_cmp(&dist).unwrap_or(Ordering::Equal)) {\n                            Ok(p) => p,\n                            Err(p) => p,\n                        };\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    // Merge two sorted lists and keep top k\n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3679,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:49:01.762562407Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 74819,
+      "index": 21,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 59.20462462100001,
+        "comparison": {
+          "previous_qps": 65.38769247761621,
+          "previous_recall": 0.9994,
+          "qps_change_pct": 3.12,
+          "recall_change_pct": -0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 14.831073198,
+        "p50_latency_ms": 65.190517,
+        "p95_latency_ms": 90.54265475,
+        "p99_latency_ms": 103.78655000999998,
+        "qps": 67.42600394790392,
+        "recall": 0.9992,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:50:29.920017284Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 22,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    (sum as f64).sqrt()\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 4 (64 floats = 256 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    let mut sum2 = _mm512_setzero_ps();\n    let mut sum3 = _mm512_setzero_ps();\n    \n    for i in (0..128).step_by(64) {\n        let va0 = _mm512_loadu_ps(a.as_ptr().add(i));\n        let vb0 = _mm512_loadu_ps(b.as_ptr().add(i));\n        let va1 = _mm512_loadu_ps(a.as_ptr().add(i + 16));\n        let vb1 = _mm512_loadu_ps(b.as_ptr().add(i + 16));\n        let va2 = _mm512_loadu_ps(a.as_ptr().add(i + 32));\n        let vb2 = _mm512_loadu_ps(b.as_ptr().add(i + 32));\n        let va3 = _mm512_loadu_ps(a.as_ptr().add(i + 48));\n        let vb3 = _mm512_loadu_ps(b.as_ptr().add(i + 48));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        let d2 = _mm512_sub_ps(va2, vb2);\n        let d3 = _mm512_sub_ps(va3, vb3);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n        sum2 = _mm512_fmadd_ps(d2, d2, sum2);\n        sum3 = _mm512_fmadd_ps(d3, d3, sum3);\n    }\n    \n    let sum01 = _mm512_add_ps(sum0, sum1);\n    let sum23 = _mm512_add_ps(sum2, sum3);\n    let sum = _mm512_add_ps(sum01, sum23);\n    let res = _mm512_reduce_add_ps(sum);\n    (res as f64).sqrt()\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 2003,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:51:20.095149337Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 76706,
+      "index": 23,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 60.474029794999886,
+        "comparison": {
+          "previous_qps": 67.42600394790392,
+          "previous_recall": 0.9992,
+          "qps_change_pct": -2.13,
+          "recall_change_pct": 0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 15.153322348,
+        "p50_latency_ms": 70.3441215,
+        "p95_latency_ms": 91.80697204999998,
+        "p99_latency_ms": 100.94704232,
+        "qps": 65.9921287909502,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:52:50.037211763Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 24,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    (sum as f64).sqrt()\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 4 (64 floats = 256 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    let mut sum2 = _mm512_setzero_ps();\n    let mut sum3 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    for i in (0..128).step_by(64) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        let va2 = _mm512_loadu_ps(pa.add(i + 32));\n        let vb2 = _mm512_loadu_ps(pb.add(i + 32));\n        let va3 = _mm512_loadu_ps(pa.add(i + 48));\n        let vb3 = _mm512_loadu_ps(pb.add(i + 48));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        let d2 = _mm512_sub_ps(va2, vb2);\n        let d3 = _mm512_sub_ps(va3, vb3);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n        sum2 = _mm512_fmadd_ps(d2, d2, sum2);\n        sum3 = _mm512_fmadd_ps(d3, d3, sum3);\n    }\n    \n    let sum01 = _mm512_add_ps(sum0, sum1);\n    let sum23 = _mm512_add_ps(sum2, sum3);\n    let sum = _mm512_add_ps(sum01, sum23);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1981,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:52:58.114584290Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 25,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                           local_top.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = match local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)) {\n                            Ok(p) => p,\n                            Err(p) => p,\n                        };\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3364,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:53:18.063320191Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 74977,
+      "index": 26,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 61.04579956300003,
+        "comparison": {
+          "previous_qps": 65.9921287909502,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": -1.03,
+          "recall_change_pct": -0.01
+        },
+        "concurrency": 4,
+        "duration_secs": 15.310747529,
+        "p50_latency_ms": 70.871289,
+        "p95_latency_ms": 91.4734383,
+        "p99_latency_ms": 113.58604299,
+        "qps": 65.31359739985952,
+        "recall": 0.9993,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:55:00.276863688Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 27,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    sum as f64\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 2 (32 floats = 128 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    // Loop 4 times for 128 floats (128 = 32 * 4)\n    for i in (0..128).step_by(32) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n    }\n    \n    let sum = _mm512_add_ps(sum0, sum1);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1474,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:55:20.515194756Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 75629,
+      "index": 28,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 62.044260013,
+        "comparison": {
+          "previous_qps": 65.31359739985952,
+          "previous_recall": 0.9993,
+          "qps_change_pct": -1.44,
+          "recall_change_pct": -0.01
+        },
+        "concurrency": 4,
+        "duration_secs": 15.534870545,
+        "p50_latency_ms": 72.1315395,
+        "p95_latency_ms": 91.03185175,
+        "p99_latency_ms": 104.39558592,
+        "qps": 64.37131208163537,
+        "recall": 0.9992,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:57:03.589125401Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 29,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        // Use a simpler approach to reduce overhead\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .map(|i| {\n                let start = i * 128;\n                let v = &vectors[start..start + 128];\n                let dist_sq = l2_distance(v, vector);\n                SearchResult { id: ids[i], distance: dist_sq }\n            })\n            .collect();\n\n        if k < n {\n            results.select_nth_unstable_by(k - 1, |a, b| {\n                a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal)\n            });\n            results.truncate(k);\n        }\n        \n        results.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1993,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:57:09.988050024Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 79200,
+      "index": 30,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 75.08000712300003,
+        "comparison": {
+          "previous_qps": 64.37131208163537,
+          "previous_recall": 0.9992,
+          "qps_change_pct": -17.44,
+          "recall_change_pct": 0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 18.81679645,
+        "p50_latency_ms": 70.83319,
+        "p95_latency_ms": 113.60080569999992,
+        "p99_latency_ms": 179.44154242999997,
+        "qps": 53.14400900584754,
+        "recall": 0.9994,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T11:58:41.975946866Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 31,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let num_threads = rayon::current_num_threads();\n        let chunk_size = (n / num_threads).max(1);\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                           local_top.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = match local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)) {\n                            Ok(p) => p,\n                            Err(p) => p,\n                        };\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3472,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T11:58:50.359297100Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 78380,
+      "index": 32,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 74.93158914200004,
+        "comparison": {
+          "previous_qps": 53.14400900584754,
+          "previous_recall": 0.9994,
+          "qps_change_pct": 0.28,
+          "recall_change_pct": -0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 18.764871394,
+        "p50_latency_ms": 80.280202,
+        "p95_latency_ms": 120.74469575,
+        "p99_latency_ms": 143.18046725000002,
+        "qps": 53.29106600324191,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:00:21.791046746Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 33,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                            local_top.sort_unstable_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)).unwrap_or_else(|e| e);\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3281,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:00:38.600894604Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 76478,
+      "index": 34,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 64.508154226,
+        "comparison": {
+          "previous_qps": 53.29106600324191,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": 16.12,
+          "recall_change_pct": 0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 16.160572795,
+        "p50_latency_ms": 71.9032355,
+        "p95_latency_ms": 102.4460142,
+        "p99_latency_ms": 121.21241199,
+        "qps": 61.878994803290325,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:02:09.335223586Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 35,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    sum as f64\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    for i in (0..128).step_by(32) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n    }\n    \n    let sum = _mm512_add_ps(sum0, sum1);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1381,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:02:15.169191953Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 78176,
+      "index": 36,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 68.01202948599993,
+        "comparison": {
+          "previous_qps": 61.878994803290325,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": -5.15,
+          "recall_change_pct": -0.01
+        },
+        "concurrency": 4,
+        "duration_secs": 17.037779224,
+        "p50_latency_ms": 78.196294,
+        "p95_latency_ms": 105.87944029999996,
+        "p99_latency_ms": 132.65028646,
+        "qps": 58.693095317925334,
+        "recall": 0.9993,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:03:46.377265864Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 37,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    sum as f64\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 4 (64 floats = 256 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    let mut sum2 = _mm512_setzero_ps();\n    let mut sum3 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    for i in (0..128).step_by(64) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        let va2 = _mm512_loadu_ps(pa.add(i + 32));\n        let vb2 = _mm512_loadu_ps(pb.add(i + 32));\n        let va3 = _mm512_loadu_ps(pa.add(i + 48));\n        let vb3 = _mm512_loadu_ps(pb.add(i + 48));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        let d2 = _mm512_sub_ps(va2, vb2);\n        let d3 = _mm512_sub_ps(va3, vb3);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n        sum2 = _mm512_fmadd_ps(d2, d2, sum2);\n        sum3 = _mm512_fmadd_ps(d3, d3, sum3);\n    }\n    \n    let sum01 = _mm512_add_ps(sum0, sum1);\n    let sum23 = _mm512_add_ps(sum2, sum3);\n    let sum = _mm512_add_ps(sum01, sum23);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1972,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:04:05.705079691Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 77488,
+      "index": 38,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 67.16798076699999,
+        "comparison": {
+          "previous_qps": 58.693095317925334,
+          "previous_recall": 0.9993,
+          "qps_change_pct": 1.2,
+          "recall_change_pct": 0.01
+        },
+        "concurrency": 4,
+        "duration_secs": 16.836263031,
+        "p50_latency_ms": 75.484992,
+        "p95_latency_ms": 105.82386,
+        "p99_latency_ms": 132.73822661,
+        "qps": 59.39560329740253,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:05:36.527194929Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 39,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = unsafe { vectors.get_unchecked(start..start + 128) };\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                            local_top.sort_unstable_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = match local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)) {\n                            Ok(p) => p,\n                            Err(p) => p,\n                        };\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3398,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:05:57.441642574Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 76283,
+      "index": 40,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 63.65829992900003,
+        "comparison": {
+          "previous_qps": 59.39560329740253,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": 5.5,
+          "recall_change_pct": -0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 15.958078442,
+        "p50_latency_ms": 70.9633805,
+        "p95_latency_ms": 99.26599555,
+        "p99_latency_ms": 120.88181102,
+        "qps": 62.66418626995242,
+        "recall": 0.9992,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:07:26.901968225Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 41,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                           local_top.sort_unstable_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)).unwrap_or_else(|e| e);\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3280,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:07:34.770848008Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 77898,
+      "index": 42,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 67.63679352199996,
+        "comparison": {
+          "previous_qps": 62.66418626995242,
+          "previous_recall": 0.9992,
+          "qps_change_pct": -5.87,
+          "recall_change_pct": 0.0
+        },
+        "concurrency": 4,
+        "duration_secs": 16.95401224,
+        "p50_latency_ms": 76.46010899999999,
+        "p95_latency_ms": 101.1825314,
+        "p99_latency_ms": 124.58225521,
+        "qps": 58.98308824153591,
+        "recall": 0.9992,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:09:05.998335804Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 43,
+      "input": {
+        "tool": "get_status"
+      },
+      "output": {
+        "best_benchmark": {
+          "avg_latency_ms": 59.20462462100001,
+          "comparison": {
+            "previous_qps": 65.38769247761621,
+            "previous_recall": 0.9994,
+            "qps_change_pct": 3.12,
+            "recall_change_pct": -0.02
+          },
+          "concurrency": 4,
+          "duration_secs": 14.831073198,
+          "p50_latency_ms": 65.190517,
+          "p95_latency_ms": 90.54265475,
+          "p99_latency_ms": 103.78655000999998,
+          "qps": 67.42600394790392,
+          "recall": 0.9992,
+          "recall_passed": true,
+          "recall_threshold": 0.95,
+          "total_queries": 1000
+        },
+        "elapsed_time_secs": 2308.7810816,
+        "last_benchmark": null,
+        "server_running": false,
+        "tool_calls_remaining": 8,
+        "tool_calls_total": 50,
+        "tool_calls_used": 42,
+        "type": "GetStatus"
+      },
+      "timestamp": "2026-02-22T12:09:21.506767146Z",
+      "tool": "get_status"
+    },
+    {
+      "duration_ms": 0,
+      "index": 44,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    sum as f64\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 4 (64 floats = 256 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    let mut sum2 = _mm512_setzero_ps();\n    let mut sum3 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    for i in (0..128).step_by(64) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        let va2 = _mm512_loadu_ps(pa.add(i + 32));\n        let vb2 = _mm512_loadu_ps(pb.add(i + 32));\n        let va3 = _mm512_loadu_ps(pa.add(i + 48));\n        let vb3 = _mm512_loadu_ps(pb.add(i + 48));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        let d2 = _mm512_sub_ps(va2, vb2);\n        let d3 = _mm512_sub_ps(va3, vb3);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n        sum2 = _mm512_fmadd_ps(d2, d2, sum2);\n        sum3 = _mm512_fmadd_ps(d3, d3, sum3);\n    }\n    \n    let sum01 = _mm512_add_ps(sum0, sum1);\n    let sum23 = _mm512_add_ps(sum2, sum3);\n    let sum = _mm512_add_ps(sum01, sum23);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 1972,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:09:49.705658669Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 45,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k * 2),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                           local_top.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = match local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)) {\n                            Ok(p) => p,\n                            Err(p) => p,\n                        };\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3368,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:10:15.584310125Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 78320,
+      "index": 46,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 66.63747271199998,
+        "comparison": {
+          "previous_qps": 58.98308824153591,
+          "previous_recall": 0.9992,
+          "qps_change_pct": 1.59,
+          "recall_change_pct": 0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 16.689391915,
+        "p50_latency_ms": 74.829567,
+        "p95_latency_ms": 106.07936805,
+        "p99_latency_ms": 123.76066433,
+        "qps": 59.91830050447946,
+        "recall": 0.9993999999999998,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:11:47.017304463Z",
+      "tool": "run_benchmark"
+    },
+    {
+      "duration_ms": 0,
+      "index": 47,
+      "input": {
+        "tool": "get_status"
+      },
+      "output": {
+        "best_benchmark": {
+          "avg_latency_ms": 59.20462462100001,
+          "comparison": {
+            "previous_qps": 65.38769247761621,
+            "previous_recall": 0.9994,
+            "qps_change_pct": 3.12,
+            "recall_change_pct": -0.02
+          },
+          "concurrency": 4,
+          "duration_secs": 14.831073198,
+          "p50_latency_ms": 65.190517,
+          "p95_latency_ms": 90.54265475,
+          "p99_latency_ms": 103.78655000999998,
+          "qps": 67.42600394790392,
+          "recall": 0.9992,
+          "recall_passed": true,
+          "recall_threshold": 0.95,
+          "total_queries": 1000
+        },
+        "elapsed_time_secs": 2465.984692435,
+        "last_benchmark": null,
+        "server_running": false,
+        "tool_calls_remaining": 4,
+        "tool_calls_total": 50,
+        "tool_calls_used": 46,
+        "type": "GetStatus"
+      },
+      "timestamp": "2026-02-22T12:11:58.710377766Z",
+      "tool": "get_status"
+    },
+    {
+      "duration_ms": 0,
+      "index": 48,
+      "input": {
+        "params": {
+          "content": "pub fn l2_distance(a: &[f32], b: &[f32]) -> f64 {\n    #[cfg(target_arch = \"x86_64\")]\n    {\n        if is_x86_feature_detected!(\"avx512f\") {\n            return unsafe { l2_distance_avx512(a, b) };\n        }\n    }\n    l2_distance_fallback(a, b)\n}\n\n#[inline(always)]\nfn l2_distance_fallback(a: &[f32], b: &[f32]) -> f64 {\n    let mut sum = 0.0;\n    for (i, &val) in a.iter().enumerate() {\n        let diff = val - b[i];\n        sum += diff * diff;\n    }\n    sum as f64\n}\n\n#[cfg(target_arch = \"x86_64\")]\n#[target_feature(enable = \"avx512f\")]\n#[target_feature(enable = \"avx512vl\")]\n#[target_feature(enable = \"avx512dq\")]\nunsafe fn l2_distance_avx512(a: &[f32], b: &[f32]) -> f64 {\n    use std::arch::x86_64::*;\n    \n    // Unroll by 4 (64 floats = 256 bytes)\n    let mut sum0 = _mm512_setzero_ps();\n    let mut sum1 = _mm512_setzero_ps();\n    let mut sum2 = _mm512_setzero_ps();\n    let mut sum3 = _mm512_setzero_ps();\n    \n    let pa = a.as_ptr();\n    let pb = b.as_ptr();\n\n    // Loop twice for 128 floats\n    for i in (0..128).step_by(64) {\n        let va0 = _mm512_loadu_ps(pa.add(i));\n        let vb0 = _mm512_loadu_ps(pb.add(i));\n        let va1 = _mm512_loadu_ps(pa.add(i + 16));\n        let vb1 = _mm512_loadu_ps(pb.add(i + 16));\n        let va2 = _mm512_loadu_ps(pa.add(i + 32));\n        let vb2 = _mm512_loadu_ps(pb.add(i + 32));\n        let va3 = _mm512_loadu_ps(pa.add(i + 48));\n        let vb3 = _mm512_loadu_ps(pb.add(i + 48));\n        \n        let d0 = _mm512_sub_ps(va0, vb0);\n        let d1 = _mm512_sub_ps(va1, vb1);\n        let d2 = _mm512_sub_ps(va2, vb2);\n        let d3 = _mm512_sub_ps(va3, vb3);\n        \n        sum0 = _mm512_fmadd_ps(d0, d0, sum0);\n        sum1 = _mm512_fmadd_ps(d1, d1, sum1);\n        sum2 = _mm512_fmadd_ps(d2, d2, sum2);\n        sum3 = _mm512_fmadd_ps(d3, d3, sum3);\n    }\n    \n    let sum01 = _mm512_add_ps(sum0, sum1);\n    let sum23 = _mm512_add_ps(sum2, sum3);\n    let sum = _mm512_add_ps(sum01, sum23);\n    let res = _mm512_reduce_add_ps(sum);\n    res as f64\n}\n",
+          "path": "src/distance.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 2005,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:12:16.375031361Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 0,
+      "index": 49,
+      "input": {
+        "params": {
+          "content": "use crate::api::*;\nuse crate::distance::l2_distance;\nuse parking_lot::RwLock;\nuse rayon::prelude::*;\nuse std::cmp::Ordering;\n\npub struct VectorDB {\n    ids: RwLock<Vec<u64>>,\n    vectors: RwLock<Vec<f32>>,\n}\n\nimpl VectorDB {\n    pub fn new() -> Self {\n        Self {\n            ids: RwLock::new(Vec::with_capacity(1_000_000)),\n            vectors: RwLock::new(Vec::with_capacity(1_000_000 * 128)),\n        }\n    }\n\n    pub fn insert(&self, id: u64, vector: Vec<f32>) {\n        let mut ids = self.ids.write();\n        let mut vectors = self.vectors.write();\n        ids.push(id);\n        vectors.extend(vector);\n    }\n\n    pub fn bulk_insert(&self, vectors: Vec<(u64, Vec<f32>)>) -> usize {\n        let count = vectors.len();\n        let mut ids = self.ids.write();\n        let mut vs = self.vectors.write();\n        for (id, vector) in vectors {\n            ids.push(id);\n            vs.extend(vector);\n        }\n        count\n    }\n\n    pub fn search(&self, vector: &[f32], top_k: u32) -> Vec<SearchResult> {\n        let ids = self.ids.read();\n        let vectors = self.vectors.read();\n        let n = ids.len();\n\n        let k = top_k as usize;\n\n        let mut results: Vec<SearchResult> = (0..n)\n            .into_par_iter()\n            .fold(\n                || Vec::with_capacity(k * 2),\n                |mut local_top, i| {\n                    let start = i * 128;\n                    let v = &vectors[start..start + 128];\n                    let dist_sq = l2_distance(v, vector);\n                    \n                    if local_top.len() < k {\n                        local_top.push(SearchResult { id: ids[i], distance: dist_sq });\n                        if local_top.len() == k {\n                           local_top.sort_by(|a, b| a.distance.partial_cmp(&b.distance).unwrap_or(Ordering::Equal));\n                        }\n                    } else if dist_sq < local_top[k-1].distance {\n                        let pos = local_top.binary_search_by(|x| x.distance.partial_cmp(&dist_sq).unwrap_or(Ordering::Equal)).unwrap_or_else(|e| e);\n                        local_top.insert(pos, SearchResult { id: ids[i], distance: dist_sq });\n                        local_top.pop();\n                    }\n                    local_top\n                }\n            )\n            .reduce(\n                || Vec::new(),\n                |mut a, b| {\n                    if a.is_empty() { return b; }\n                    if b.is_empty() { return a; }\n                    \n                    let mut merged = Vec::with_capacity(k);\n                    let (mut i, mut j) = (0, 0);\n                    while merged.len() < k && (i < a.len() || j < b.len()) {\n                        if i < a.len() && (j == b.len() || a[i].distance <= b[j].distance) {\n                            merged.push(SearchResult { id: a[i].id, distance: a[i].distance });\n                            i += 1;\n                        } else {\n                            merged.push(SearchResult { id: b[j].id, distance: b[j].distance });\n                            j += 1;\n                        }\n                    }\n                    merged\n                }\n            );\n\n        for res in &mut results {\n            res.distance = res.distance.sqrt();\n        }\n        results\n    }\n}\n",
+          "path": "src/db.rs"
+        },
+        "tool": "write_file"
+      },
+      "output": {
+        "bytes_written": 3275,
+        "status": "ok",
+        "type": "WriteFile"
+      },
+      "timestamp": "2026-02-22T12:13:00.798751219Z",
+      "tool": "write_file"
+    },
+    {
+      "duration_ms": 76898,
+      "index": 50,
+      "input": {
+        "params": {
+          "concurrency": null,
+          "max_queries": null,
+          "warmup": null
+        },
+        "tool": "run_benchmark"
+      },
+      "output": {
+        "avg_latency_ms": 68.58873540699996,
+        "comparison": {
+          "previous_qps": 59.91830050447946,
+          "previous_recall": 0.9993999999999998,
+          "qps_change_pct": -2.91,
+          "recall_change_pct": -0.02
+        },
+        "concurrency": 4,
+        "duration_secs": 17.190424636,
+        "p50_latency_ms": 78.431716,
+        "p95_latency_ms": 114.2281399,
+        "p99_latency_ms": 135.36823618,
+        "qps": 58.17191961074719,
+        "recall": 0.9992,
+        "recall_passed": true,
+        "recall_threshold": 0.95,
+        "total_queries": 1000,
+        "type": "RunBenchmark"
+      },
+      "timestamp": "2026-02-22T12:14:45.037093556Z",
+      "tool": "run_benchmark"
+    }
+  ],
+  "last_benchmark": {
+    "avg_latency_ms": 71.61167330769993,
+    "comparison": {
+      "previous_qps": 58.17191961074719,
+      "previous_recall": 0.9992,
+      "qps_change_pct": -4.11,
+      "recall_change_pct": 0.02
+    },
+    "concurrency": 4,
+    "duration_secs": 179.267872298,
+    "p50_latency_ms": 79.087424,
+    "p95_latency_ms": 107.2391053,
+    "p99_latency_ms": 125.39362811,
+    "qps": 55.7824437352435,
+    "recall": 0.9993499999999989,
+    "recall_passed": true,
+    "recall_threshold": 0.95,
+    "total_queries": 10000
+  },
+  "tool_calls_total": 50,
+  "tool_calls_used": 50
+}

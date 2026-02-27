@@ -1,0 +1,21 @@
+[package]
+name = "vector-db"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+hyper = { version = "1.0", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace"] }
+parking_lot = "0.12"
+rayon = "1.8"
+
+[profile.release]
+opt-level = 3
+target-cpu = "native"
+debug = true
+lto = false

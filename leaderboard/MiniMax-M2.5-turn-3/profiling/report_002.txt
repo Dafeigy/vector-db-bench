@@ -1,0 +1,11 @@
+Profiling Report #002
+Date: 2026-02-22 15:15:21 UTC
+
+Top Functions:
+   41.34%  _ZN18vector_db_skeleton8distance18l2_distance_avx51217he3f289ae8f8d7a4cE.llvm.4263215067997366016
+   35.81%  core::slice::sort::stable::quicksort::quicksort
+    5.23%  0x0000000000198c89
+    3.92%  core::slice::sort::stable::drift::sort
+    2.17%  core::slice::sort::shared::smallsort::sort8_stable
+    1.90%  rayon::iter::plumbing::Folder::consume_iter
+    1.35%  vector_db_skeleton::distance::l2_distance

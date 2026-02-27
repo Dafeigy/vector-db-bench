@@ -1,0 +1,7 @@
+Profiling Report #001
+Date: 2026-02-25 04:18:21 UTC
+
+Top Functions:
+   79.02%  _ZN75_$LT$F$u20$as$u20$axum..handler..Handler$LT$$LP$M$C$T1$C$T2$RP$$C$S$GT$$GT$4call28_$u7b$$u7b$closure$u7d$$u7d$17h992976f0c4f435faE.llvm.13303656417788747407
+   10.73%  core::slice::sort::unstable::quicksort::quicksort
+    5.16%  core::slice::sort::shared::smallsort::small_sort_general

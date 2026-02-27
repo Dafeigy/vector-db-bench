@@ -1,0 +1,8 @@
+Profiling Report #002
+Date: 2026-02-25 04:45:35 UTC
+
+Top Functions:
+   87.42%  _ZN18vector_db_skeleton8distance23squared_distance_avx51217he60b2b3725e7e1e1E.llvm.6956372436670993723
+    1.94%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    1.93%  vector_db_skeleton::distance::squared_distance
+    1.47%  serde_json::de::Deserializer<R>::parse_decimal

@@ -1,0 +1,9 @@
+Profiling Report #004
+Date: 2026-02-26 03:08:55 UTC
+
+Top Functions:
+   79.48%  _ZN18vector_db_skeleton8distance9l2_avx51217h4bdbb2673d3dad53E.llvm.3268836214748639403
+    6.49%  core::slice::sort::unstable::quicksort::partition
+    1.95%  rayon::iter::plumbing::Folder::consume_iter
+    1.75%  vector_db_skeleton::distance::l2_distance
+    1.09%  serde_json::de::Deserializer<R>::parse_decimal

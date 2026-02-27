@@ -1,0 +1,13 @@
+Profiling Report #002
+Date: 2026-02-23 15:52:06 UTC
+
+Top Functions:
+   72.89%  vector_db_skeleton::distance::l2_distance_batch_avx512
+    4.93%  core::ops::function::impls::<impl core::ops::function::FnMut<A> for &F>::call_mut
+    4.56%  <core::iter::adapters::map::Map<I,F> as core::iter::traits::iterator::Iterator>::fold
+    2.92%  vector_db_skeleton::distance::l2_distance_batch_avx512
+    2.33%  serde_json::de::Deserializer<R>::parse_decimal
+    1.69%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize
+    1.44%  serde_json::de::Deserializer<R>::parse_integer
+    1.42%  <&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32
+    1.10%  <serde_json::de::SeqAccess<R> as serde_core::de::SeqAccess>::next_element_seed

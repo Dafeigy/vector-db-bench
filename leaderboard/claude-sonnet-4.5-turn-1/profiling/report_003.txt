@@ -1,0 +1,11 @@
+Profiling Report #003
+Date: 2026-02-23 19:53:01 UTC
+
+Top Functions:
+   67.31%  _ZN18vector_db_skeleton8distance18l2_distance_avx51217he3f289ae8f8d7a4cE.llvm.17048950481843860326
+   16.78%  rayon::iter::plumbing::Folder::consume_iter
+    2.24%  serde_json::de::Deserializer<R>::parse_decimal
+    1.64%  <serde_path_to_error::de::TrackedSeed<X> as serde_core::de::DeserializeSeed>::deserialize
+    1.52%  _ZN18vector_db_skeleton2db15build_ivf_index28_$u7b$$u7b$closure$u7d$$u7d$17h1389ab6f48b51f49E.llvm.5277810423029631312
+    1.28%  <&mut serde_json::de::Deserializer<R> as serde_core::de::Deserializer>::deserialize_f32
+    1.07%  serde_json::de::Deserializer<R>::parse_integer

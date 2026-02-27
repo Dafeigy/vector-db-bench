@@ -1,0 +1,8 @@
+Profiling Report #001
+Date: 2026-02-23 19:39:31 UTC
+
+Top Functions:
+   85.94%  <alloc::vec::Vec<T> as alloc::vec::spec_from_iter::SpecFromIter<T,I>>::from_iter
+    6.72%  core::slice::sort::stable::quicksort::quicksort
+    2.11%  core::slice::sort::shared::smallsort::small_sort_general_with_scratch
+    1.13%  0x0000000000198c89

@@ -1,0 +1,5 @@
+Profiling Report #002
+Date: 2026-02-22 09:20:12 UTC
+
+Top Functions:
+   95.88%  vector_db_skeleton::db::VectorDB::search

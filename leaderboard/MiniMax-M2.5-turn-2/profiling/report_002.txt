@@ -1,0 +1,6 @@
+Profiling Report #002
+Date: 2026-02-22 15:16:03 UTC
+
+Top Functions:
+   90.26%  vector_db_skeleton::db::VectorDB::search
+    6.61%  core::slice::sort::unstable::quicksort::quicksort

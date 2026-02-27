@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IVF 搜索算法参数对比 — 三模型动画演示</title>
+<style>
+@font-face {
+  font-family: 'Sarasa Fixed SC';
+  src: local('Sarasa Fixed SC'), local('Sarasa Fixed SC Regular'), local('更纱黑体 Fixed SC');
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: 'Sarasa Fixed SC';
+  src: local('Sarasa Fixed SC Bold'), local('更纱黑体 Fixed SC Bold');
+  font-weight: 700; font-style: normal;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Sarasa Fixed SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f5f7; color: #1d1d1f; overflow-x: hidden;
+}
+.hero {
+  text-align: center; padding: 50px 20px 20px;
+  background: linear-gradient(180deg, #fbfbfd 0%, #f5f5f7 100%);
+}
+.hero h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; color: #1d1d1f; margin-bottom: 10px; }
+.hero p { font-size: 15px; color: #86868b; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+.hero .code-ref { font-size: 13px; color: #0071e3; margin-top: 8px; }
+.canvas-section { display: flex; justify-content: center; padding: 12px 20px 8px; overflow-x: auto; }
+canvas { border-radius: 20px; background: #fff; box-shadow: 0 4px 40px rgba(0,0,0,0.06); }
+.controls { text-align: center; padding: 8px 20px 20px; }
+.controls button {
+  font-family: inherit; font-size: 14px; font-weight: 600; padding: 10px 28px;
+  border: none; border-radius: 20px; cursor: pointer; margin: 0 6px;
+  transition: all 0.2s ease;
+}
+.btn-primary { background: #0071e3; color: #fff; }
+.btn-primary:hover { background: #0077ed; }
+.btn-secondary { background: #e8e8ed; color: #1d1d1f; }
+.btn-secondary:hover { background: #d2d2d7; }
+.speed-info { font-size: 13px; color: #86868b; margin-top: 10px; }
+.modules {
+  max-width: 1100px; margin: 0 auto; padding: 0 20px 50px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+}
+.card {
+  background: #fff; border-radius: 16px; padding: 28px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+.card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: #1d1d1f; }
+.card .tag { font-size: 12px; color: #fff; padding: 2px 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
+.card p { font-size: 14px; color: #6e6e73; line-height: 1.6; }
+.card code { font-family: 'Sarasa Fixed SC', monospace; font-size: 13px; background: #f5f5f7; padding: 2px 6px; border-radius: 4px; color: #1d1d1f; }
+footer { text-align: center; padding: 40px 20px; color: #86868b; font-size: 13px; border-top: 1px solid #e8e8ed; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>IVF 搜索算法参数对比</h1>
+  <p>三个模型都用了 IVF（倒排文件索引），但聚类数和探测数的差异导致搜索空间相差数倍。<br>gemini-3.1-pro 每次查询要扫描 5% 的数据，而 gemini-3-pro 只扫描 2.34%，qwen 更是只扫描 1.46%。</p>
+  <div class="code-ref">gemini-3-pro: 2048 聚类 / 48 探测 → 1970 QPS &nbsp;|&nbsp; qwen3.5-plus: 2048 聚类 / 30 探测 → 1405 QPS &nbsp;|&nbsp; gemini-3.1-pro: 1000 聚类 / 50 探测 → 658 QPS</div>
+</div>
+
+<div class="canvas-section">
+  <canvas id="main-canvas" width="2200" height="1400"></canvas>
+</div>
+
+<div class="controls">
+  <button class="btn-primary" id="playBtn" onclick="togglePlay()">⏸ 暂停</button>
+  <button class="btn-secondary" onclick="resetAnim()">↺ 重置</button>
+  <div class="speed-info">~1,000,000 向量 &nbsp;|&nbsp; 128 维 &nbsp;|&nbsp; top_k = 10 &nbsp;|&nbsp; 聚类数越多 → 每个桶越小 → 搜索越快</div>
+</div>
+
+<div class="modules">
+  <div class="card">
+    <h3>① IVF 倒排文件索引</h3>
+    <span class="tag" style="background:#0071e3">核心算法</span>
+    <p>将 100 万向量通过 K-Means 聚类分到 K 个桶中。搜索时先找最近的 nprobe 个聚类中心，只扫描这些桶内的向量。搜索空间 = <code>nprobe / K</code>。</p>
+  </div>
+  <div class="card">
+    <h3>② 聚类数 K 的影响</h3>
+    <span class="tag" style="background:#34c759">关键参数</span>
+    <p>K 越大，每个桶的向量越少，搜索越快。gemini-3-pro 和 qwen 用 <code>K=2048</code>，每桶约 488 条。gemini-3.1-pro 用 <code>K=1000</code>，每桶约 1000 条，桶内扫描量翻倍。</p>
+  </div>
+  <div class="card">
+    <h3>③ 探测数 nprobe 的影响</h3>
+    <span class="tag" style="background:#ff9500">精度与速度</span>
+    <p>nprobe 越大，recall 越高但速度越慢。gemini-3.1-pro 用 <code>nprobe=50</code>（5%），而 qwen 仅用 <code>nprobe=30</code>（1.46%）就达到了 0.9558 recall，得益于 5 轮 K-Means 精炼的高质量聚类。</p>
+  </div>
+  <div class="card">
+    <h3>④ K-Means 精炼</h3>
+    <span class="tag" style="background:#af52de">聚类质量</span>
+    <p>qwen 是唯一做了 5 轮 K-Means 迭代的实现。高质量聚类意味着向量被分配到更准确的桶中，用更少的 nprobe 就能找到正确结果。gemini-3-pro 和 3.1-pro 都跳过了精炼，用随机采样的初始中心。</p>
+  </div>
+  <div class="card">
+    <h3>⑤ 候选集大小</h3>
+    <span class="tag" style="background:#ff3b30">性能瓶颈</span>
+    <p>gemini-3.1-pro 的候选集约 <code>50,000</code> 条，是 qwen（14,600）的 3.4 倍、gemini-3-pro（23,400）的 2.1 倍。每条候选都需要计算 128 维 L2 距离，候选集大小直接决定了搜索延迟。</p>
+  </div>
+  <div class="card">
+    <h3>⑥ 综合结论</h3>
+    <span class="tag" style="background:#5ac8fa">权衡</span>
+    <p>gemini-3.1-pro 虽然拥有最优的距离计算实现（4 路累加器完全展开），但 <code>K=1000 + nprobe=50</code> 的保守参数让它每次查询要扫描 5 万条向量，抵消了距离计算的优势。recall 0.9728 远超阈值 0.95，说明有大量余量可以换 QPS。</p>
+  </div>
+</div>
+
+<footer>IVF 搜索算法参数对比 — Vector DB Bench Project — KCores LLM Arena</footer>
+
+<script>
+const canvas = document.getElementById('main-canvas');
+const ctx = canvas.getContext('2d');
+const dpr = window.devicePixelRatio || 1;
+const W = 2200, H = 1400;
+canvas.width = W * dpr; canvas.height = H * dpr;
+canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+ctx.scale(dpr, dpr);
+
+const C = {
+  accent: '#0071e3', green: '#34c759', orange: '#ff9500',
+  purple: '#af52de', red: '#ff3b30', teal: '#5ac8fa',
+  text: '#1d1d1f', textSub: '#86868b', textFaint: '#c7c7cc',
+  boxStroke: '#d2d2d7', divider: '#e8e8ed',
+};
+
+// ─── Model configs ───────────────────────────────────────────────────────────
+const models = [
+  { name: 'gemini-3-pro-preview-turn-3', short: 'gemini-3-pro', color: '#0071e3',
+    K: 2048, nprobe: 48, qps: 1970.50, recall: 0.9534, candidates: 23400,
+    kmeans: '0 轮', topk: 'BinaryHeap', parallel: 'rayon fold+reduce', badge: '🥇 冠军' },
+  { name: 'qwen3.5-plus-turn-3', short: 'qwen3.5-plus', color: '#ff9500',
+    K: 2048, nprobe: 30, qps: 1405.30, recall: 0.9558, candidates: 14600,
+    kmeans: '5 轮', topk: 'Vec+quickselect', parallel: 'rayon par_iter', badge: '🥈 亚军' },
+  { name: 'gemini-3.1-pro-preview-turn-1', short: 'gemini-3.1-pro', color: '#ff3b30',
+    K: 1000, nprobe: 50, qps: 657.99, recall: 0.9728, candidates: 50000,
+    kmeans: '0 轮', topk: 'Vec+quickselect', parallel: '单线程', badge: '🥉 季军' },
+];
+
+const TOTAL_VECTORS = 1000000;
+
+// ─── Animation state ─────────────────────────────────────────────────────────
+let playing = true;
+let time = 0;
+let phase = 'cluster';  // 'cluster' | 'probe' | 'scan' | 'done'
+let phaseTimer = 0;
+
+// Cluster animation
+let clusterProgress = [0, 0, 0]; // per model
+// Probe animation
+let probeProgress = [0, 0, 0];
+// Scan animation
+let scanProgress = [0, 0, 0];
+let scanDone = [false, false, false];
+
+const CLUSTER_DURATION = 180;
+const PROBE_DURATION = 120;
+// Scan durations proportional to candidate count
+const SCAN_MAX = 300;
+
+function togglePlay() {
+  playing = !playing;
+  document.getElementById('playBtn').textContent = playing ? '⏸ 暂停' : '▶ 播放';
+  if (playing) requestAnimationFrame(render);
+}
+
+function resetAnim() {
+  time = 0; phaseTimer = 0; phase = 'cluster';
+  clusterProgress = [0, 0, 0];
+  probeProgress = [0, 0, 0];
+  scanProgress = [0, 0, 0];
+  scanDone = [false, false, false];
+  if (!playing) render();
+}
+
+// ─── Drawing helpers ─────────────────────────────────────────────────────────
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function drawLabel(text, x, y, color, size, align) {
+  ctx.font = `700 ${size || 13}px "Sarasa Fixed SC", sans-serif`;
+  ctx.fillStyle = color || C.textFaint;
+  ctx.textAlign = align || 'left'; ctx.textBaseline = 'top';
+  ctx.fillText(text, x, y);
+}
+
+function drawLabelLight(text, x, y, color, size, align) {
+  ctx.font = `400 ${size || 13}px "Sarasa Fixed SC", sans-serif`;
+  ctx.fillStyle = color || C.textFaint;
+  ctx.textAlign = align || 'left'; ctx.textBaseline = 'top';
+  ctx.fillText(text, x, y);
+}
+
+// Seeded random for consistent cluster positions
+function seededRandom(seed) {
+  let s = seed;
+  return function() { s = (s * 16807 + 0) % 2147483647; return s / 2147483647; };
+}
+
+// ─── Generate cluster data for visualization ─────────────────────────────────
+// We visualize a simplified version: show clusters as circles in a 2D space
+function generateClusters(K, seed) {
+  const rng = seededRandom(seed);
+  const clusters = [];
+  // Place clusters in a grid-like pattern with jitter
+  const cols = Math.ceil(Math.sqrt(K));
+  const rows = Math.ceil(K / cols);
+  for (let i = 0; i < K; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    clusters.push({
+      x: (col + 0.5) / cols + (rng() - 0.5) * 0.3 / cols,
+      y: (row + 0.5) / rows + (rng() - 0.5) * 0.3 / rows,
+      size: TOTAL_VECTORS / K, // avg vectors per cluster
+    });
+  }
+  return clusters;
+}
+
+// Pre-generate cluster layouts (simplified for visual: show ~40 representative clusters)
+const VIS_K = [40, 40, 20]; // visual cluster count (proportional to actual K)
+const clusterData = [
+  generateClusters(VIS_K[0], 42),
+  generateClusters(VIS_K[1], 42), // same seed = same layout for comparison
+  generateClusters(VIS_K[2], 42),
+];
+
+// Select which clusters get probed (closest to center query point)
+function getProbeIndices(clusters, nprobeVis) {
+  // Query point at center
+  const qx = 0.5, qy = 0.5;
+  const dists = clusters.map((c, i) => ({ i, d: Math.hypot(c.x - qx, c.y - qy) }));
+  dists.sort((a, b) => a.d - b.d);
+  return dists.slice(0, nprobeVis).map(d => d.i);
+}
+
+// Visual nprobe counts (proportional)
+const VIS_NPROBE = [
+  Math.round(40 * 48 / 2048),  // ~1 (but min 1)
+  Math.round(40 * 30 / 2048),  // ~1
+  Math.round(20 * 50 / 1000),  // ~1
+];
+// Make them more visible
+VIS_NPROBE[0] = Math.max(3, Math.round(VIS_K[0] * 48 / 2048));
+VIS_NPROBE[1] = Math.max(2, Math.round(VIS_K[1] * 30 / 2048));
+VIS_NPROBE[2] = Math.max(3, Math.round(VIS_K[2] * 50 / 1000));
+
+const probeIndices = [
+  getProbeIndices(clusterData[0], VIS_NPROBE[0]),
+  getProbeIndices(clusterData[1], VIS_NPROBE[1]),
+  getProbeIndices(clusterData[2], VIS_NPROBE[2]),
+];
+
+// ─── Draw one model's IVF panel ──────────────────────────────────────────────
+function drawModelPanel(mi, ox, oy, pw, ph) {
+  const m = models[mi];
+  const clusters = clusterData[mi];
+  const visK = VIS_K[mi];
+  const probes = probeIndices[mi];
+  const cp = clusterProgress[mi];
+  const pp = probeProgress[mi];
+  const sp = scanProgress[mi];
+
+  // Panel background
+  roundRect(ox, oy, pw, ph, 16);
+  ctx.fillStyle = '#fff'; ctx.fill();
+  roundRect(ox, oy, pw, ph, 16);
+  ctx.strokeStyle = m.color + '40'; ctx.lineWidth = 2; ctx.stroke();
+
+  // Header
+  drawLabel(m.badge + ' ' + m.short, ox + pw / 2, oy + 10, m.color, 16, 'center');
+  drawLabelLight(`K=${m.K}  nprobe=${m.nprobe}  QPS=${m.qps}`, ox + pw / 2, oy + 32, C.textSub, 12, 'center');
+
+  // ── Cluster visualization area ──
+  const cAreaX = ox + 20, cAreaY = oy + 55;
+  const cAreaW = pw - 40, cAreaH = 280;
+
+  // Background
+  roundRect(cAreaX, cAreaY, cAreaW, cAreaH, 10);
+  ctx.fillStyle = '#fafafa'; ctx.fill();
+  roundRect(cAreaX, cAreaY, cAreaW, cAreaH, 10);
+  ctx.strokeStyle = '#eee'; ctx.lineWidth = 1; ctx.stroke();
+
+  // Draw clusters
+  const visibleClusters = Math.floor(cp * visK);
+  for (let i = 0; i < visibleClusters; i++) {
+    const c = clusters[i];
+    const cx = cAreaX + c.x * cAreaW;
+    const cy = cAreaY + c.y * cAreaH;
+    const isProbed = probes.includes(i) && pp > 0;
+    const baseR = mi === 2 ? 14 : 8; // bigger circles for fewer clusters
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, baseR, 0, Math.PI * 2);
+
+    if (isProbed && pp >= 1) {
+      // Probed cluster - highlighted
+      const scanFill = sp > 0 ? Math.min(sp, 1) : 0;
+      ctx.fillStyle = m.color + (scanFill > 0 ? '50' : '25');
+      ctx.fill();
+      ctx.strokeStyle = m.color;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Scan progress ring
+      if (sp > 0) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, baseR + 4, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * Math.min(sp, 1));
+        ctx.strokeStyle = m.color;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+    } else {
+      ctx.fillStyle = '#e8e8ed';
+      ctx.fill();
+      ctx.strokeStyle = '#d2d2d7';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+
+  // Query point (center)
+  if (cp > 0.5) {
+    const qx = cAreaX + 0.5 * cAreaW;
+    const qy = cAreaY + 0.5 * cAreaH;
+    ctx.beginPath(); ctx.arc(qx, qy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#ff2d55'; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Probe lines
+    if (pp > 0) {
+      for (let pi = 0; pi < probes.length; pi++) {
+        const c = clusters[probes[pi]];
+        const cx = cAreaX + c.x * cAreaW;
+        const cy = cAreaY + c.y * cAreaH;
+        const lineProgress = Math.min(pp * probes.length - pi, 1);
+        if (lineProgress > 0) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.setLineDash([4, 3]);
+          ctx.lineDashOffset = -time * 0.3;
+          const tx = qx + (cx - qx) * lineProgress;
+          const ty = qy + (cy - qy) * lineProgress;
+          ctx.moveTo(qx, qy);
+          ctx.lineTo(tx, ty);
+          ctx.strokeStyle = m.color + '80';
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.restore();
+        }
+      }
+    }
+
+    // Label
+    drawLabelLight('Q', qx - 4, qy - 18, '#ff2d55', 11, 'left');
+  }
+
+  // Cluster count label
+  drawLabelLight(`${m.K} 个聚类`, cAreaX + cAreaW / 2, cAreaY + cAreaH + 4, C.textSub, 11, 'center');
+
+  // ── Stats area below cluster viz ──
+  const statsY = cAreaY + cAreaH + 24;
+
+  // Search space bar
+  const searchPct = m.nprobe / m.K;
+  const barX = ox + 20, barW = pw - 40, barH = 22;
+
+  drawLabel('搜索空间', barX, statsY, C.textSub, 12);
+  const barY = statsY + 18;
+  roundRect(barX, barY, barW, barH, 6);
+  ctx.fillStyle = '#f0f0f2'; ctx.fill();
+
+  if (pp >= 1) {
+    const fillW = barW * searchPct * (sp > 0 ? 1 : pp);
+    roundRect(barX, barY, Math.max(fillW, 8), barH, 6);
+    ctx.fillStyle = m.color + '80'; ctx.fill();
+  }
+
+  ctx.font = '700 11px "Sarasa Fixed SC", monospace';
+  ctx.fillStyle = m.color; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  ctx.fillText(`${m.nprobe}/${m.K} = ${(searchPct * 100).toFixed(2)}%`, barX + barW, barY + barH / 2);
+
+  // Candidate count
+  const candY = barY + barH + 12;
+  drawLabel('估算候选数', barX, candY, C.textSub, 12);
+
+  // Candidate bar (normalized to max = 50000)
+  const candBarY = candY + 18;
+  const candNorm = m.candidates / 50000;
+  roundRect(barX, candBarY, barW, barH, 6);
+  ctx.fillStyle = '#f0f0f2'; ctx.fill();
+
+  if (sp > 0) {
+    const candFillW = barW * candNorm * Math.min(sp * 1.5, 1);
+    roundRect(barX, candBarY, Math.max(candFillW, 8), barH, 6);
+    ctx.fillStyle = mi === 2 ? C.red + '70' : (mi === 0 ? C.accent + '60' : C.orange + '60');
+    ctx.fill();
+  }
+
+  ctx.font = '700 12px "Sarasa Fixed SC", monospace';
+  ctx.fillStyle = mi === 2 ? C.red : C.textSub;
+  ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  ctx.fillText(`~${(m.candidates / 1000).toFixed(1)}K 条`, barX + barW, candBarY + barH / 2);
+
+  // Multiplier comparison
+  if (mi === 2 && sp > 0.5) {
+    ctx.font = '700 13px "Sarasa Fixed SC", sans-serif';
+    ctx.fillStyle = C.red; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('⚠ 是 gemini-3-pro 的 2.1 倍', barX, candBarY + barH + 6);
+    ctx.fillText('⚠ 是 qwen 的 3.4 倍', barX, candBarY + barH + 24);
+  }
+
+  // QPS result
+  const qpsY = candBarY + barH + (mi === 2 ? 50 : 12);
+  const qpsBarY = qpsY + 18;
+  drawLabel('QPS (查询/秒)', barX, qpsY, C.textSub, 12);
+
+  const qpsNorm = m.qps / 2000;
+  roundRect(barX, qpsBarY, barW, barH + 4, 6);
+  ctx.fillStyle = '#f0f0f2'; ctx.fill();
+
+  if (scanDone[mi]) {
+    const qpsFillW = barW * qpsNorm;
+    roundRect(barX, qpsBarY, Math.max(qpsFillW, 8), barH + 4, 6);
+    ctx.fillStyle = m.color; ctx.fill();
+
+    ctx.font = '700 14px "Sarasa Fixed SC", monospace';
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(`${m.qps.toFixed(1)} QPS`, barX + 8, qpsBarY + (barH + 4) / 2);
+
+    ctx.font = '400 11px "Sarasa Fixed SC", sans-serif';
+    ctx.fillStyle = C.textSub; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(`recall: ${m.recall.toFixed(4)}`, barX + barW, qpsBarY + (barH + 4) / 2);
+  }
+
+  // Additional info
+  const infoY = qpsBarY + barH + 16;
+  ctx.font = '400 11px "Sarasa Fixed SC", sans-serif';
+  ctx.fillStyle = C.textSub; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText(`K-Means: ${m.kmeans}  |  Top-K: ${m.topk}  |  并行: ${m.parallel}`, barX, infoY);
+}
+
+// ─── Draw comparison section at bottom ───────────────────────────────────────
+function drawComparison(oy) {
+  // Divider
+  ctx.save();
+  ctx.setLineDash([2, 4]); ctx.strokeStyle = C.divider; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(50, oy); ctx.lineTo(W - 50, oy); ctx.stroke();
+  ctx.setLineDash([]); ctx.restore();
+
+  drawLabel('搜索空间对比 — 为什么 gemini-3.1-pro 慢了 3 倍？', W / 2, oy + 12, C.text, 18, 'center');
+
+  const tableY = oy + 44;
+  const cols = [240, 560, 920, 1300];
+
+  // Headers
+  const headers = ['', 'gemini-3-pro (冠军)', 'qwen3.5-plus (亚军)', 'gemini-3.1-pro (季军)'];
+  const hColors = [C.textSub, C.accent, C.orange, C.red];
+  ctx.font = '700 14px "Sarasa Fixed SC", sans-serif';
+  for (let i = 0; i < 4; i++) {
+    ctx.fillStyle = hColors[i];
+    ctx.textAlign = i === 0 ? 'right' : 'left';
+    ctx.fillText(headers[i], cols[i], tableY);
+  }
+
+  const rows = [
+    ['聚类数 K', '2048', '2048', '1000'],
+    ['探测数 nprobe', '48', '30', '50'],
+    ['搜索空间', '48/2048 ≈ 2.34%', '30/2048 ≈ 1.46%', '50/1000 = 5.0%'],
+    ['估算候选数', '~23,400', '~14,600', '~50,000'],
+    ['K-Means 迭代', '0 轮（无精炼）', '5 轮（高质量聚类）', '0 轮（无精炼）'],
+    ['Top-K 策略', '在线 BinaryHeap', 'Vec + quickselect', 'Vec + quickselect'],
+    ['搜索并行', 'rayon fold+reduce', 'rayon par_iter', '单线程'],
+    ['QPS', '1970.50', '1405.30', '657.99'],
+    ['Recall', '0.9534', '0.9558', '0.9728'],
+  ];
+
+  ctx.font = '400 13px "Sarasa Fixed SC", sans-serif';
+  for (let r = 0; r < rows.length; r++) {
+    const ry = tableY + 28 + r * 28;
+
+    if (r % 2 === 0) {
+      roundRect(220, ry - 8, W - 440, 26, 6);
+      ctx.fillStyle = '#f8f8fa'; ctx.fill();
+    }
+
+    ctx.fillStyle = C.textSub; ctx.textAlign = 'right';
+    ctx.fillText(rows[r][0], cols[0], ry + 4);
+
+    for (let c = 1; c <= 3; c++) {
+      ctx.fillStyle = C.text; ctx.textAlign = 'left';
+      // Highlight problematic values for gemini-3.1-pro
+      if (c === 3 && (r === 0 || r === 1 || r === 2 || r === 3 || r === 6 || r === 7)) {
+        ctx.fillStyle = C.red;
+        ctx.font = '700 13px "Sarasa Fixed SC", sans-serif';
+      } else if (c === 1 && (r === 7)) {
+        ctx.fillStyle = C.accent;
+        ctx.font = '700 13px "Sarasa Fixed SC", sans-serif';
+      } else {
+        ctx.font = '400 13px "Sarasa Fixed SC", sans-serif';
+      }
+      ctx.fillText(rows[r][c], cols[c], ry + 4);
+    }
+  }
+
+  // Bottom insight
+  const insightY = tableY + 28 + rows.length * 28 + 16;
+  const pulse = 1 + 0.03 * Math.sin(time * 0.08);
+  ctx.save();
+  ctx.translate(W / 2, insightY + 10);
+  ctx.scale(pulse, pulse);
+  ctx.font = '700 18px "Sarasa Fixed SC", sans-serif';
+  ctx.fillStyle = C.red; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('gemini-3.1-pro 搜索空间 5.0% 是 gemini-3-pro 2.34% 的 2.1 倍 → 候选集 50K vs 23K → QPS 差 3 倍', 0, 0);
+  ctx.restore();
+
+  // Sub-insight
+  ctx.font = '400 14px "Sarasa Fixed SC", sans-serif';
+  ctx.fillStyle = C.green; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('优化方案: 将 K 从 1000 提升到 2048，nprobe 从 50 降到 30，预计 QPS 可提升 2-3 倍', W / 2, insightY + 32);
+}
+
+// ─── Draw IVF pipeline diagram ───────────────────────────────────────────────
+function drawPipelineDiagram(ox, oy) {
+  drawLabel('IVF 搜索流程', ox + 340, oy, C.text, 16, 'center');
+
+  const steps = [
+    { label: '1M 向量', sub: '原始数据', icon: '📦', w: 120 },
+    { label: 'K-Means', sub: '聚类分桶', icon: '🔀', w: 120 },
+    { label: '查询向量', sub: '找最近聚类', icon: '🔍', w: 130 },
+    { label: '扫描 nprobe 桶', sub: '计算距离', icon: '📐', w: 140 },
+    { label: 'Top-K', sub: '返回结果', icon: '🏆', w: 110 },
+  ];
+
+  const totalW = steps.reduce((s, st) => s + st.w + 30, 0) - 30;
+  let sx = ox + 340 - totalW / 2;
+  const sy = oy + 26;
+  const stepH = 44;
+
+  for (let i = 0; i < steps.length; i++) {
+    const st = steps[i];
+    roundRect(sx, sy, st.w, stepH, 10);
+    ctx.fillStyle = i === 3 ? C.red + '15' : '#f0f7ff';
+    ctx.fill();
+    roundRect(sx, sy, st.w, stepH, 10);
+    ctx.strokeStyle = i === 3 ? C.red + '60' : C.accent + '40';
+    ctx.lineWidth = 1.5; ctx.stroke();
+
+    ctx.font = '700 12px "Sarasa Fixed SC", sans-serif';
+    ctx.fillStyle = C.text; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText(st.icon + ' ' + st.label, sx + st.w / 2, sy + 6);
+    ctx.font = '400 10px "Sarasa Fixed SC", sans-serif';
+    ctx.fillStyle = C.textSub;
+    ctx.fillText(st.sub, sx + st.w / 2, sy + 24);
+
+    // Arrow to next
+    if (i < steps.length - 1) {
+      const ax = sx + st.w + 4;
+      const ay = sy + stepH / 2;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay); ctx.lineTo(ax + 22, ay);
+      ctx.strokeStyle = C.textFaint; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(ax + 22, ay);
+      ctx.lineTo(ax + 16, ay - 4); ctx.lineTo(ax + 16, ay + 4);
+      ctx.closePath(); ctx.fillStyle = C.textFaint; ctx.fill();
+    }
+
+    sx += st.w + 30;
+  }
+}
+
+// ─── Main render ─────────────────────────────────────────────────────────────
+function render() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Pipeline diagram at top
+  drawPipelineDiagram(380, 10);
+
+  // Three model panels side by side
+  const panelW = 680;
+  const panelH = 580;
+  const panelY = 100;
+  const gap = 20;
+  const totalPanelW = 3 * panelW + 2 * gap;
+  const startX = (W - totalPanelW) / 2;
+
+  for (let mi = 0; mi < 3; mi++) {
+    drawModelPanel(mi, startX + mi * (panelW + gap), panelY, panelW, panelH);
+  }
+
+  // Comparison table below
+  drawComparison(panelY + panelH + 30);
+
+  // ── Advance animation ──
+  if (playing) {
+    time++;
+    phaseTimer++;
+
+    // Phase: cluster building
+    if (phase === 'cluster') {
+      for (let mi = 0; mi < 3; mi++) {
+        clusterProgress[mi] = Math.min(phaseTimer / CLUSTER_DURATION, 1);
+      }
+      if (phaseTimer >= CLUSTER_DURATION) {
+        phase = 'probe'; phaseTimer = 0;
+      }
+    }
+    // Phase: probe selection
+    else if (phase === 'probe') {
+      for (let mi = 0; mi < 3; mi++) {
+        probeProgress[mi] = Math.min(phaseTimer / PROBE_DURATION, 1);
+      }
+      if (phaseTimer >= PROBE_DURATION) {
+        phase = 'scan'; phaseTimer = 0;
+      }
+    }
+    // Phase: scanning candidates
+    else if (phase === 'scan') {
+      // Different scan speeds proportional to candidate count
+      const maxCand = 50000;
+      for (let mi = 0; mi < 3; mi++) {
+        const scanDuration = SCAN_MAX * (models[mi].candidates / maxCand);
+        scanProgress[mi] = Math.min(phaseTimer / scanDuration, 1);
+        if (scanProgress[mi] >= 1 && !scanDone[mi]) {
+          scanDone[mi] = true;
+        }
+      }
+      if (scanDone.every(d => d)) {
+        phase = 'done';
+      }
+    }
+
+    requestAnimationFrame(render);
+  }
+}
+
+render();
+</script>
+</body>
+</html>

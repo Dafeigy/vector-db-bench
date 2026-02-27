@@ -1,0 +1,7 @@
+Profiling Report #001
+Date: 2026-02-25 04:36:34 UTC
+
+Top Functions:
+   80.64%  <rayon::iter::fold::FoldFolder<C,ID,F> as rayon::iter::plumbing::Folder<T>>::consume_iter
+   10.72%  alloc::collections::binary_heap::BinaryHeap<T,A>::pop
+    5.06%  alloc::collections::binary_heap::BinaryHeap<T,A>::push

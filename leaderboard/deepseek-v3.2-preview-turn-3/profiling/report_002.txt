@@ -1,0 +1,9 @@
+Profiling Report #002
+Date: 2026-02-25 04:46:22 UTC
+
+Top Functions:
+   83.65%  vector_db_skeleton::distance::l2_distance_avx512
+    5.36%  core::slice::sort::unstable::quicksort::partition
+    2.26%  rayon::iter::plumbing::Folder::consume_iter
+    1.50%  vector_db_skeleton::distance::l2_distance
+    1.10%  serde_json::de::Deserializer<R>::parse_decimal

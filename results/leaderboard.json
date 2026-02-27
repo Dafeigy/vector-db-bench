@@ -1,5 +1,35 @@
 [
   {
+    "model_name": "anthropic/claude-opus-4.6",
+    "entry_dir": "claude-opus-4.6-turn-1",
+    "qps": 3547.701065230593,
+    "recall": 0.9590399999999724,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.248801+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-opus-4.6",
+    "entry_dir": "claude-opus-4.6-turn-3",
+    "qps": 3138.1993577024155,
+    "recall": 0.9612099999999724,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.258801+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-opus-4.6",
+    "entry_dir": "claude-opus-4.6-turn-2",
+    "qps": 3130.585248771404,
+    "recall": 0.9589199999999716,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.253802+00:00"
+  },
+  {
     "model_name": "google/gemini-3-pro-preview",
     "entry_dir": "gemini-3-pro-preview-turn-3",
     "qps": 1970.5047452456813,
@@ -7,7 +37,7 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.467679+00:00"
+    "timestamp": "2026-02-27T09:36:44.298801+00:00"
   },
   {
     "model_name": "qwen3.5-plus",
@@ -17,7 +47,27 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.486105+00:00"
+    "timestamp": "2026-02-27T09:36:44.356801+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.3-codex",
+    "entry_dir": "gpt-5.3-codex-preview-turn-1",
+    "qps": 860.3073327331101,
+    "recall": 0.9568999999999968,
+    "recall_passed": true,
+    "tool_calls_used": 0,
+    "result_source": "benchmark_files_scan",
+    "timestamp": "2026-02-27T09:36:44.327801+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.3-codex",
+    "entry_dir": "gpt-5.3-codex-preview-turn-2",
+    "qps": 824.4166523606332,
+    "recall": 0.956999999999997,
+    "recall_passed": true,
+    "tool_calls_used": 0,
+    "result_source": "benchmark_files_scan",
+    "timestamp": "2026-02-27T09:36:44.328801+00:00"
   },
   {
     "model_name": "google/gemini-3.1-pro-preview",
@@ -27,7 +77,17 @@
     "recall_passed": true,
     "tool_calls_used": 46,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.469282+00:00"
+    "timestamp": "2026-02-27T09:36:44.302301+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.5",
+    "entry_dir": "claude-sonnet-4.5-turn-1",
+    "qps": 605.6151077693904,
+    "recall": 0.9878299999999858,
+    "recall_passed": true,
+    "tool_calls_used": 47,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.262301+00:00"
   },
   {
     "model_name": "google/gemini-3-pro-preview",
@@ -37,7 +97,17 @@
     "recall_passed": true,
     "tool_calls_used": 37,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.464612+00:00"
+    "timestamp": "2026-02-27T09:36:44.294301+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.5",
+    "entry_dir": "claude-sonnet-4.5-turn-3",
+    "qps": 326.615959197361,
+    "recall": 0.9911299999999886,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.268801+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -47,7 +117,37 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.479304+00:00"
+    "timestamp": "2026-02-27T09:36:44.342302+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.3-codex",
+    "entry_dir": "gpt-5.3-codex-preview-turn-3",
+    "qps": 234.33297536495223,
+    "recall": 0.9705999999999974,
+    "recall_passed": true,
+    "tool_calls_used": 43,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.331801+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.6",
+    "entry_dir": "claude-sonnet-4.6-turn-3",
+    "qps": 140.8621863487215,
+    "recall": 0.9966999999999996,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.277301+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.2-codex",
+    "entry_dir": "gpt-5.2-codex-preview-turn-1",
+    "qps": 73.81127787109986,
+    "recall": 0.9993,
+    "recall_passed": true,
+    "tool_calls_used": 44,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.322301+00:00"
   },
   {
     "model_name": "google/gemini-3.1-pro-preview",
@@ -57,7 +157,17 @@
     "recall_passed": true,
     "tool_calls_used": 31,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.470335+00:00"
+    "timestamp": "2026-02-27T09:36:44.304801+00:00"
+  },
+  {
+    "model_name": "google/gemini-3.1-pro-preview",
+    "entry_dir": "gemini-3.1-pro-preview-turn-4",
+    "qps": 71.42385200214854,
+    "recall": 0.9994399999999988,
+    "recall_passed": true,
+    "tool_calls_used": 40,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.311301+00:00"
   },
   {
     "model_name": "google/gemini-3.1-pro-preview",
@@ -67,7 +177,27 @@
     "recall_passed": true,
     "tool_calls_used": 46,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.472064+00:00"
+    "timestamp": "2026-02-27T09:36:44.308301+00:00"
+  },
+  {
+    "model_name": "google/gemini-3-flash-preview",
+    "entry_dir": "gemini-3-flash-preview-turn-2",
+    "qps": 67.42600394790392,
+    "recall": 0.9992,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.288301+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.5",
+    "entry_dir": "claude-sonnet-4.5-turn-2",
+    "qps": 65.8715943491103,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.265301+00:00"
   },
   {
     "model_name": "google/gemini-3-pro-preview",
@@ -77,7 +207,17 @@
     "recall_passed": true,
     "tool_calls_used": 20,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.465425+00:00"
+    "timestamp": "2026-02-27T09:36:44.295801+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.2-codex",
+    "entry_dir": "gpt-5.2-codex-preview-turn-2",
+    "qps": 59.23327372211579,
+    "recall": 0.9993,
+    "recall_passed": true,
+    "tool_calls_used": 27,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.324301+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -87,7 +227,27 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.480950+00:00"
+    "timestamp": "2026-02-27T09:36:44.344801+00:00"
+  },
+  {
+    "model_name": "MiniMax-M2.5",
+    "entry_dir": "MiniMax-M2.5-turn-3",
+    "qps": 57.79903472778811,
+    "recall": 0.9993699999999988,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.243301+00:00"
+  },
+  {
+    "model_name": "deepseek/deepseek-v3.2",
+    "entry_dir": "deepseek-v3.2-preview-turn-2",
+    "qps": 55.591375113803394,
+    "recall": 0.9993,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.281801+00:00"
   },
   {
     "model_name": "glm-5",
@@ -97,7 +257,7 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.476865+00:00"
+    "timestamp": "2026-02-27T09:36:44.319801+00:00"
   },
   {
     "model_name": "glm-5",
@@ -107,7 +267,7 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.475314+00:00"
+    "timestamp": "2026-02-27T09:36:44.316801+00:00"
   },
   {
     "model_name": "qwen3.5-plus",
@@ -117,7 +277,57 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "best_benchmark",
-    "timestamp": "2026-02-19T20:00:15.484214+00:00"
+    "timestamp": "2026-02-27T09:36:44.352801+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.2-codex",
+    "entry_dir": "gpt-5.2-codex-preview-turn-3",
+    "qps": 51.68884039102575,
+    "recall": 0.9992,
+    "recall_passed": true,
+    "tool_calls_used": 43,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.326801+00:00"
+  },
+  {
+    "model_name": "MiniMax-M2.5",
+    "entry_dir": "MiniMax-M2.5-turn-1",
+    "qps": 49.92423587826739,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.238301+00:00"
+  },
+  {
+    "model_name": "Ling-2.5-1T",
+    "entry_dir": "Ling-2.5-1T-turn-3",
+    "qps": 46.490025196683845,
+    "recall": 0.9993699999999988,
+    "recall_passed": true,
+    "tool_calls_used": 24,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.235306+00:00"
+  },
+  {
+    "model_name": "x-ai/grok-4.1-fast",
+    "entry_dir": "grok-4.1-fast-turn-3",
+    "qps": 43.90450718774998,
+    "recall": 0.9997,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.337801+00:00"
+  },
+  {
+    "model_name": "deepseek/deepseek-v3.2",
+    "entry_dir": "deepseek-v3.2-preview-turn-3",
+    "qps": 41.818331145815876,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.284302+00:00"
   },
   {
     "model_name": "qwen3.5-plus",
@@ -127,7 +337,67 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-19T20:00:15.482319+00:00"
+    "timestamp": "2026-02-27T09:36:44.348801+00:00"
+  },
+  {
+    "model_name": "deepseek/deepseek-v3.2",
+    "entry_dir": "deepseek-v3.2-preview-turn-1",
+    "qps": 36.01136431164465,
+    "recall": 0.9993999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.279301+00:00"
+  },
+  {
+    "model_name": "x-ai/grok-4.1-fast",
+    "entry_dir": "grok-4.1-fast-turn-2",
+    "qps": 35.23230115916556,
+    "recall": 0.9993999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.335801+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.6",
+    "entry_dir": "claude-sonnet-4.6-turn-1",
+    "qps": 34.53414229014627,
+    "recall": 0.9988999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 47,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.271301+00:00"
+  },
+  {
+    "model_name": "google/gemini-3-flash-preview",
+    "entry_dir": "gemini-3-flash-preview-turn-3",
+    "qps": 25.6035755130204,
+    "recall": 0.9993999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 44,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.291801+00:00"
+  },
+  {
+    "model_name": "Ling-2.5-1T",
+    "entry_dir": "Ling-2.5-1T-turn-2",
+    "qps": 23.42043677547759,
+    "recall": 0.9993699999999988,
+    "recall_passed": true,
+    "tool_calls_used": 31,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.233301+00:00"
+  },
+  {
+    "model_name": "x-ai/grok-4.1-fast",
+    "entry_dir": "grok-4.1-fast-turn-1",
+    "qps": 19.259508723024933,
+    "recall": 0.9990999999999998,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.333802+00:00"
   },
   {
     "model_name": "kimi-k2.5",
@@ -137,7 +407,7 @@
     "recall_passed": true,
     "tool_calls_used": 0,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-19T20:00:15.477142+00:00"
+    "timestamp": "2026-02-27T09:36:44.338801+00:00"
   },
   {
     "model_name": "glm-5",
@@ -147,6 +417,56 @@
     "recall_passed": true,
     "tool_calls_used": 50,
     "result_source": "benchmark_files_scan",
-    "timestamp": "2026-02-19T20:00:15.473652+00:00"
+    "timestamp": "2026-02-27T09:36:44.313801+00:00"
+  },
+  {
+    "model_name": "MiniMax-M2.5",
+    "entry_dir": "MiniMax-M2.5-turn-2",
+    "qps": 8.203035048638656,
+    "recall": 0.9994,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.240301+00:00"
+  },
+  {
+    "model_name": "Ling-2.5-1T",
+    "entry_dir": "Ling-2.5-1T-turn-1",
+    "qps": 7.934431990928194,
+    "recall": 0.9993,
+    "recall_passed": true,
+    "tool_calls_used": 50,
+    "result_source": "best_benchmark",
+    "timestamp": "2026-02-27T09:36:44.231303+00:00"
+  },
+  {
+    "model_name": "anthropic/claude-sonnet-4.6",
+    "entry_dir": "claude-sonnet-4.6-turn-2",
+    "qps": 0.0,
+    "recall": 0.0,
+    "recall_passed": false,
+    "tool_calls_used": 50,
+    "result_source": "none",
+    "timestamp": "2026-02-27T09:36:44.273801+00:00"
+  },
+  {
+    "model_name": "openai/gpt-5.2-codex",
+    "entry_dir": "gemini-3-flash-preview-turn-1",
+    "qps": 0.0,
+    "recall": 0.0,
+    "recall_passed": false,
+    "tool_calls_used": 0,
+    "result_source": "none",
+    "timestamp": "2026-02-27T09:36:44.284801+00:00"
+  },
+  {
+    "model_name": "google/gemini-3-pro-preview",
+    "entry_dir": "gemini-3-pro-preview-turn-4",
+    "qps": 0.0,
+    "recall": 0.0,
+    "recall_passed": false,
+    "tool_calls_used": 0,
+    "result_source": "none",
+    "timestamp": "2026-02-27T09:36:44.299301+00:00"
   }
 ]

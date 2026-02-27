@@ -366,6 +366,19 @@ python3 scripts/rebuild_leaderboard.py --leaderboard-dir ./leaderboard --output 
 LEADERBOARD_DIR=./my-results RESULTS_DIR=./my-output bash scripts/run_eval.sh --rebuild-leaderboard
 ```
 
+以上命令只会重建 `results/leaderboard.json`。如果还需要重新生成排行榜图片（`leaderboard.png`），需要额外运行渲染脚本：
+
+```bash
+# 渲染排行榜图片（默认输出到 assets/images/leaderboard.png）
+python3 scripts/render_leaderboard.py
+
+# 自定义输入/输出路径
+python3 scripts/render_leaderboard.py --input results/leaderboard.json --output assets/images/leaderboard.png
+
+# 渲染包含所有条目的完整图片（而非每个模型只保留最佳成绩）
+python3 scripts/render_leaderboard.py --all
+```
+
 脚本会扫描 `leaderboard/` 下每个子目录，从 `agent_log.jsonl` 第一行读取模型名称，然后按以下优先级提取最佳 QPS 结果：
 
 1. `eval_log.json` 中的 `best_benchmark`（Agent 运行期间跟踪的最高 QPS）

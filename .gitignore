@@ -28,6 +28,9 @@ Thumbs.db
 # Example Script
 example.md
 
+# Node
+node_modules
+
 # --- Keep these (reports, logs, source code) ---
 # agent_log.jsonl        ✓ kept
 # eval_log.json          ✓ kept
